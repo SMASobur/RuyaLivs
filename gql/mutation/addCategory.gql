@@ -1,0 +1,7 @@
+mutation addCategory($category: AddCategoryInput) {
+  addCategory(category: $category) {
+    code
+    success
+    message
+  }
+}

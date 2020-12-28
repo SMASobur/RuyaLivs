@@ -1,0 +1,29 @@
+query getReservationByUserId($input: GetReservationByUserIdInput) {
+  getReservationByUserId(input: $input) {
+    code
+    success
+    message
+    count
+    reservations {
+      id
+      createdAt
+      numberOfPeople
+      desiredDate
+      desiredTime
+      reservationStatus
+      isPreOrder
+      order{
+        orderNote
+        items{
+          cartItems{
+            productId
+            productName
+            pricePerUnit
+            productQuantity
+          }
+          totalCost
+        }
+      }
+    }
+  }
+}

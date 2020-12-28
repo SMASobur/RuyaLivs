@@ -1,0 +1,9 @@
+mutation addPreOrderReservation(
+  $preOrderReservation: PreOrderReservationInput
+) {
+  addPreOrderReservation(preOrderReservation: $preOrderReservation) {
+    code
+    success
+    message
+  }
+}

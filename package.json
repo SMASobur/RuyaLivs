@@ -1,0 +1,43 @@
+{
+  "name": "ruya_livs",
+  "version": "1.0.0",
+  "description": "RuyaLivs Client",
+  "author": "shafi",
+  "private": true,
+  "engines": {
+    "node": "12.16.x"
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "heroku-postbuild": "npm run build"
+  },
+  "dependencies": {
+    "@nuxtjs/apollo": "^4.0.0-rc9",
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "cookie-universal-nuxt": "^2.1.4",
+    "fibers": "^5.0.0",
+    "firebase": "^7.15.5",
+    "graphql-tag": "^2.10.3",
+    "node-fetch": "^2.6.0",
+    "nuxt": "^2.13.3",
+    "nuxt-gmaps": "^1.2.4",
+    "nuxt-google-maps-module": "^1.6.0",
+    "v-mask": "^2.2.1",
+    "v-stripe-elements": "^1.2.0",
+    "vue-plugin-load-script": "^1.2.0",
+    "vue-the-mask": "^0.11.1",
+    "vuex-persist": "^2.2.0",
+    "vuex-persistedstate": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/runtime-corejs3": "^7.10.4",
+    "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "core-js": "^3.6.5"
+  }
+}

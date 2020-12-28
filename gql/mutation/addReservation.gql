@@ -1,0 +1,14 @@
+mutation addReservation($reservation:ResrevationInput){
+  addReservation(reservation:$reservation){
+    code
+    success
+    message
+    reservation{
+      createdAt
+      numberOfPeople
+      desiredDate
+      desiredTime
+      reservationStatus
+    }
+  }
+}

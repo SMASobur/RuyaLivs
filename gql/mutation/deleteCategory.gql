@@ -1,0 +1,7 @@
+mutation deleteCategory($id: ID!){
+  deleteCategory(id: $id){
+    code
+    success
+    message
+  }
+}

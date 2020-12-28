@@ -1,0 +1,10 @@
+mutation updateDeliveryStatus($input:UpdateDeliveryStatusInput!){
+  updateDeliveryStatus(input:$input){
+    code
+    success
+    message
+    order{
+      id
+    }
+  }
+}

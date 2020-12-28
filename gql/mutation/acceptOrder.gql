@@ -1,0 +1,10 @@
+mutation acceptOrder($input:OrderAcceptInput!){
+  acceptOrder(input:$input){
+    code
+    success
+    message
+    order{
+      id
+    }
+  }
+}

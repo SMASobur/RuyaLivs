@@ -1,0 +1,11 @@
+mutation updateReservationStatus($input:UpdateReservationStatusInput){
+  updateReservationStatus(input:$input){
+    code
+    success
+    message
+    reservation{
+      id
+      reservationStatus
+    }
+  }
+}

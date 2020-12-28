@@ -1,0 +1,7 @@
+mutation addOrder($order: OrderInput!){
+  addOrder(order:$order){
+    code
+    success
+    message
+  }
+}

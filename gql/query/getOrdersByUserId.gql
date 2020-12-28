@@ -1,0 +1,35 @@
+query getOrderByUserId($orderInput: GetOrderByUserIdInput!) {
+  getOrderByUserId(orderInput: $orderInput) {
+    code
+    success
+    message
+    orders{
+      id
+      createdAt
+      orderType
+      orderStatus
+      deliveryStatus
+      orderNote
+      deliveryCharge
+      prepareTime
+      orderAcceptedAt
+      orderBy{
+        firstName
+        lastName
+        email
+      }
+      items{
+        cartItems{
+          productId
+          productName
+          pricePerUnit
+          productQuantity
+          productSize
+
+        }
+        totalCost
+      }
+
+    }
+  }
+}

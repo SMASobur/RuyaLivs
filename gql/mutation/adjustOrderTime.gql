@@ -1,0 +1,10 @@
+mutation adjustOrderTime($input:AdjustOrderTimeInput!){
+  adjustOrderTime(input:$input){
+    code
+    success
+    message
+    order{
+      id
+    }
+  }
+}
