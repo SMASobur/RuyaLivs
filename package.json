@@ -19,7 +19,6 @@
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "@nuxtjs/vuetify": "^1.11.2",
     "cookie-universal-nuxt": "^2.1.4",
     "fibers": "^5.0.0",
     "firebase": "^7.15.5",
@@ -38,6 +37,7 @@
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.10.4",
     "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/vuetify": "^1.11.2",
     "core-js": "^3.6.5"
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-if="!$fetchState.pending">
-      <v-col class="my-0 py-0">
+      <v-col>
         <MenuFilter />
       </v-col>
     </v-row>
@@ -54,7 +54,7 @@
             :sizeAndPrice="item.sizeAndPrice"
             @onDetailsClicked="onMenuItemClick(item)"
           />
-          
+
         </div>
       </v-col>
     </v-row>
