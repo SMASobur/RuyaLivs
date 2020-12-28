@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-row v-if="!$fetchState.pending">
+    <v-row v-if="!$fetchState.pending" class="mt-2">
       <v-col>
         <MenuFilter />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="mt-2">
       <v-col v-if="isPreOrder" cols="12" md="12" sm="12">
         <div class="d-flex justify-end">
           <v-switch
@@ -16,7 +16,7 @@
         </div>
       </v-col>
     </v-row>
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center mr-2">
       <v-progress-circular
         :size="50"
         color="accent"
@@ -34,6 +34,7 @@
     </v-row>
     <v-row
       v-if="!$fetchState.pending && !isMenuLoading && totalProductPage != 0"
+      class="mt-1"
     >
       <v-col
         cols="12"
