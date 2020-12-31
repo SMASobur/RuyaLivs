@@ -1,8 +1,10 @@
 <template>
-  <v-dialog v-model="show" max-width="500">
+  <v-dialog :persistent="persist" v-model="show" max-width="500">
     <v-card class="mx-auto" outlined>
-      <v-card-title>Login</v-card-title>
+      <v-card-title v-if="userType == 'USER'">User Login</v-card-title>
+      <v-card-title v-else-if="userType == 'ADMIN'">Admin Login</v-card-title>
       <v-card-text>
+        <!-- <pre>{{userType}}</pre> -->
         <v-form v-model="isFormValid">
           <v-text-field
             type="email"
@@ -15,10 +17,10 @@
             label="password"
             v-model="password"
             :rules="passwordRules"
-            :type="showPassword ? 'text':'password'"
+            :type="showPassword ? 'text' : 'password'"
             prepend-icon="mdi-lock"
-            :append-icon="showPassword ? 'mdi-eye':'mdi-eye-off'"
-            @click:append="showPassword=!showPassword"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showPassword = !showPassword"
           ></v-text-field>
         </v-form>
       </v-card-text>
@@ -31,15 +33,23 @@
           depressed
           small
           color="primary"
-        >Login</v-btn>
+          >Login</v-btn
+        >
         <v-spacer></v-spacer>
-        <span class="caption mx-1">Not an user ?</span>
+        <span v-if="userType == 'USER'" class="caption mx-1"
+          >Not an user ?</span
+        >
         <v-btn
-          @click.stop="closeLoginDialog();showRegistration=true"
+          v-if="userType == 'USER'"
+          @click.stop="
+            closeLoginDialog();
+            showRegistration = true;
+          "
           small
           text
           color="primary"
-        >Register</v-btn>
+          >Register</v-btn
+        >
       </v-card-actions>
     </v-card>
     <UserRegistration v-model="showRegistration" />
@@ -53,29 +63,39 @@ import loginUserGql from "@/gql/mutation/loginUser.gql";
 export default {
   name: "UserLogin",
   components: {
-    UserRegistration
+    UserRegistration,
   },
   props: {
-    value: Boolean
+    value: Boolean,
+    userType: {
+      type: String,
+      required: true,
+    },
+    persist: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   data() {
     return {
       showPassword: false,
       email: "",
       password: "",
       emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       passwordRules: [
-        v => !!v || "Password is required",
-        v => (v && v.length >= 6) || "Password must have 6+ characters"
+        (v) => !!v || "Password is required",
+        (v) => (v && v.length >= 6) || "Password must have 6+ characters",
       ],
       isFormValid: false,
       loading: false,
-      showRegistration: false
+      showRegistration: false,
     };
   },
+  created() {},
   methods: {
     closeLoginDialog() {
       // this.$emit("registerButtonClick");
@@ -85,30 +105,38 @@ export default {
       this.loading = true;
       const user = {
         email: this.email,
-        password: this.password
+        password: this.password,
+        userType: this.userType,
       };
+      console.log("user type in login", user);
       try {
         const response = await this.$apollo.mutate({
           mutation: loginUserGql,
-          variables: { user }
+          variables: { user },
         });
         const data = response.data.loginUser;
         console.log("login user", data);
         if (data.success) {
           this.setAuthUser(data.user);
-          this.setOrderUser(data.user);
+          if (this.userType == "USER") this.setOrderUser(data.user);
           await this.$apolloHelpers.onLogin(data.token);
           const loginResponse = {
             code: data.code,
             success: data.success,
             message: data.message,
-            token: data.token
+            token: data.token,
           };
           this.setAuthResponse(loginResponse);
-          this.closeLoginDialog();
+          if (this.userType == "ADMIN")
+            this.$router.push("/admin/menu/show_menu");
+          else this.closeLoginDialog();
           this.$cookies.set("user-id", data.user.id, {
             path: "/",
-            maxAge: 60 * 60 * 24 * 365
+            maxAge: 60 * 60 * 24 * 365,
+          });
+          this.$cookies.set("loggedInUser", data.user, {
+            path: "/",
+            maxAge: 60 * 60 * 24 * 365,
           });
         }
 
@@ -119,19 +147,19 @@ export default {
         }
         this.$notifier.showMessage({
           content: data.message,
-          color: color
+          color: color,
         });
       } catch (err) {
         console.error("err", err);
         this.loading = false;
         this.$notifier.showMessage({
           content: err.message,
-          color: "error"
+          color: "error",
         });
       }
     },
     ...mapActions("auth", ["setAuthUser", "setAuthResponse"]),
-    ...mapActions("order", ["setOrderUser"])
+    ...mapActions("order", ["setOrderUser"]),
   },
   computed: {
     show: {
@@ -140,8 +168,8 @@ export default {
       },
       set(value) {
         this.$emit("input", value);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

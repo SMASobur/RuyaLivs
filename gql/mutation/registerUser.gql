@@ -10,6 +10,7 @@ mutation addUser($user:AddUserInput) {
       lastName
       email
       emergencyContactNo
+      userType
     }
   }
 }

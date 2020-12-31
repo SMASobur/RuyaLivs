@@ -1,14 +1,18 @@
 <template>
   <v-app>
     <!-- navigation drawer starts -->
-    <v-navigation-drawer v-model="drawer"  disable-resize-watcher fixed app>
-      <div v-if="authUserResponse.success">
+    <v-navigation-drawer v-model="drawer" disable-resize-watcher fixed app>
+      <div
+        v-if="
+          authUserResponse.success && authUser && authUser.userType == 'USER'
+        "
+      >
         <v-list-item two-line>
           <v-list-item-avatar>
             <img src="/img/users/icon_user.png" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{authUser.fullName}}</v-list-item-title>
+            <v-list-item-title>{{ authUser.fullName }}</v-list-item-title>
             <v-list-item-subtitle>User</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -16,7 +20,13 @@
       </div>
 
       <v-list>
-        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -28,14 +38,30 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn v-if="authUserResponse.success" block color="accent" @click="onLogout">Logout</v-btn>
+          <v-btn
+            v-if="
+              authUserResponse.success &&
+              authUser &&
+              authUser.userType == 'USER'
+            "
+            block
+            color="accent"
+            @click="onLogout"
+            >Logout</v-btn
+          >
         </div>
       </template>
     </v-navigation-drawer>
     <!-- navigation drawer ends -->
 
     <!-- cart drawer starts -->
-    <v-navigation-drawer v-model="rightDrawer" temporary right fixed width="450">
+    <v-navigation-drawer
+      v-model="rightDrawer"
+      temporary
+      right
+      fixed
+      width="450"
+    >
       <v-list>
         <v-list-item>
           <v-btn class="mr-2" text rounded @click="rightDrawer = !rightDrawer">
@@ -50,24 +76,26 @@
         <div class="pa-2">
           <v-btn
             v-if="!isReservationWithPreOrderActive"
-            :disabled="cartLength===0"
+            :disabled="cartLength === 0"
             color="primary"
             block
             to="/checkout"
-          >Checkout</v-btn>
+            >Checkout</v-btn
+          >
           <v-btn
             v-else
-            :disabled="cartLength===0"
+            :disabled="cartLength === 0"
             color="primary"
             block
             to="/preorder"
-          >Pre Order Reservation</v-btn>
+            >Pre Order Reservation</v-btn
+          >
         </div>
       </template>
     </v-navigation-drawer>
     <!-- cart drawer ends -->
 
-    <v-app-bar :clipped-left="clipped" app  dark color="primary">
+    <v-app-bar :clipped-left="clipped" app dark color="primary">
       <div>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       </div>
@@ -100,7 +128,13 @@
       <!-- user icon ends -->
 
       <!-- login button starts -->
-      <v-btn outlined v-if="!authUserResponse.success" text @click="showLogin=true" class="ml-2">
+      <v-btn
+        outlined
+        v-if="authUser.userType != 'USER'"
+        text
+        @click="showLogin = true"
+        class="ml-2"
+      >
         <v-icon left>mdi-account</v-icon>Login
       </v-btn>
       <!-- login button ends -->
@@ -113,7 +147,7 @@
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-badge avatar color="green" overlap>
           <template v-slot:badge>
-            <v-avatar>{{cartLength}}</v-avatar>
+            <v-avatar>{{ cartLength }}</v-avatar>
           </template>
           <v-icon size="40">mdi-cart</v-icon>
         </v-badge>
@@ -125,7 +159,7 @@
       <v-container>
         <nuxt />
         <SnackBar />
-        <UserLogin v-model="showLogin" />
+        <UserLogin v-model="showLogin" userType="USER" />
       </v-container>
     </v-main>
 
@@ -161,7 +195,7 @@ export default {
     ShoppingCart,
     UserLogin,
     UserRegistration,
-    SnackBar
+    SnackBar,
   },
   data() {
     return {
@@ -172,7 +206,7 @@ export default {
         {
           icon: "mdi-book-open-page-variant",
           title: "My Shop",
-          to: "/shop"
+          to: "/shop",
         },
         // {
         //   icon: "mdi-seat-passenger",
@@ -186,7 +220,7 @@ export default {
       title: "Ruya Livs AB",
       showLogin: false,
       showRegistration: false,
-      bottomNav: 0
+      bottomNav: 0,
     };
   },
   methods: {
@@ -195,8 +229,9 @@ export default {
       this.removeAuthResponse();
       this.removeAuthUser();
       this.$cookies.remove("user-id");
+      this.$cookies.remove("loggedInUser");
     },
-    ...mapActions("auth", ["removeAuthResponse", "removeAuthUser"])
+    ...mapActions("auth", ["removeAuthResponse", "removeAuthUser"]),
   },
   computed: {
     cartLength() {
@@ -204,9 +239,9 @@ export default {
     },
     ...mapGetters("auth", {
       authUser: "authUser",
-      authUserResponse: "authUserResponse"
+      authUserResponse: "authUserResponse",
     }),
-    ...mapGetters("reservation", ["isReservationWithPreOrderActive"])
+    ...mapGetters("reservation", ["isReservationWithPreOrderActive"]),
   },
   watch: {
     authUserResponse(newVal, oldVal) {
@@ -216,7 +251,7 @@ export default {
       if (newVal.code === 200) {
         this.showLogin = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

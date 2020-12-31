@@ -35,20 +35,20 @@
           <v-text-field
             label="Password"
             v-model="password"
-            :type="showPassword ? 'text':'password'"
+            :type="showPassword ? 'text' : 'password'"
             :rules="passwordRules"
             prepend-icon="mdi-lock"
-            :append-icon="showPassword ? 'mdi-eye':'mdi-eye-off'"
-            @click:append="showPassword=!showPassword"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showPassword = !showPassword"
           ></v-text-field>
           <v-text-field
             label="Re-enter password"
             v-model="rePassword"
-            :type="showRePassword ? 'text':'password'"
+            :type="showRePassword ? 'text' : 'password'"
             :rules="passwordConfirmRules"
             prepend-icon="mdi-lock"
-            :append-icon="showRePassword ? 'mdi-eye':'mdi-eye-off'"
-            @click:append="showRePassword=!showRePassword"
+            :append-icon="showRePassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showRePassword = !showRePassword"
           ></v-text-field>
         </v-form>
       </v-card-text>
@@ -61,14 +61,24 @@
           depressed
           small
           color="primary"
-        >Register</v-btn>
+          >Register</v-btn
+        >
         <v-spacer></v-spacer>
         <span class="caption mx-1">Already have account ?</span>
-        <v-btn @click="showLogin=true;closeRegistrationDialog()" text small color="primary">Login</v-btn>
+        <v-btn
+          @click="
+            showLogin = true;
+            closeRegistrationDialog();
+          "
+          text
+          small
+          color="primary"
+          >Login</v-btn
+        >
       </v-card-actions>
     </v-card>
     <!-- <UserLogin  /> -->
-    <UserLogin v-model="showLogin"></UserLogin>
+    <UserLogin v-model="showLogin" userType="USER"></UserLogin>
   </v-dialog>
 </template>
 
@@ -79,10 +89,10 @@ import registerUserGql from "@/gql/mutation/registerUser.gql";
 export default {
   name: "UserRegistration",
   components: {
-    UserLogin: () => import("../auth/UserLogin.vue")
+    UserLogin: () => import("../auth/UserLogin.vue"),
   },
   props: {
-    value: Boolean
+    value: Boolean,
   },
   data() {
     return {
@@ -91,33 +101,33 @@ export default {
       isFormValid: false,
       firstName: "",
       lastName: "",
-      nameRules: [v => !!v || "Name is required"],
+      nameRules: [(v) => !!v || "Name is required"],
       email: "",
       emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       emergencyContactNo: "",
       emergencyContactNoRules: [
-        v => !!v || "Contact number is required",
-        v =>
+        (v) => !!v || "Contact number is required",
+        (v) =>
           /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})/.test(v) ||
-          "Invalid contact number format"
+          "Invalid contact number format",
       ],
       password: "",
       rePassword: "",
       passwordRules: [
-        v => !!v || "Password is required",
-        v => (v && v.length >= 6) || "Password must have 6+ characters",
+        (v) => !!v || "Password is required",
+        (v) => (v && v.length >= 6) || "Password must have 6+ characters",
         // v => /(?=.*[A-Z])/.test(v) || "Must have one uppercase character",
-        v => /(?=.*\d)/.test(v) || "Must have one number"
+        (v) => /(?=.*\d)/.test(v) || "Must have one number",
       ],
       passwordConfirmRules: [
-        v => !!v || "Password is required",
-        v => this.password === this.rePassword || "Password must match"
+        (v) => !!v || "Password is required",
+        (v) => this.password === this.rePassword || "Password must match",
       ],
       loading: false,
-      showLogin: false
+      showLogin: false,
     };
   },
   methods: {
@@ -136,27 +146,32 @@ export default {
         lastName: this.lastName,
         email: this.email,
         password: this.password,
-        emergencyContactNo: this.emergencyContactNo
+        emergencyContactNo: this.emergencyContactNo,
+        userType: "USER",
       };
       this.loading = true;
       try {
         const response = await this.$apollo.mutate({
           mutation: registerUserGql,
-          variables: { user }
+          variables: { user },
         });
         const data = response.data.addUser;
         this.setAuthUser(data.user);
         this.setOrderUser(data.user);
         this.$cookies.set("user-id", data.user.id, {
           path: "/",
-          maxAge: 60 * 60 * 24 * 365
+          maxAge: 60 * 60 * 24 * 365,
+        });
+        this.$cookies.set("loggedInUser", data.user, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 365,
         });
         this.loading = false;
         const registrationResponse = {
           code: data.code,
           success: data.success,
           message: data.message,
-          token: data.token
+          token: data.token,
         };
         let color = "success";
         if (data.code === 11000) {
@@ -169,7 +184,7 @@ export default {
         this.setAuthResponse(registrationResponse);
         this.$notifier.showMessage({
           content: data.message,
-          color: color
+          color: color,
         });
 
         // await this.$apolloHelpers.onLogin(res.token);
@@ -179,7 +194,7 @@ export default {
       }
     },
     ...mapActions("auth", ["setAuthUser", "setAuthResponse"]),
-    ...mapActions("order", ["setOrderUser"])
+    ...mapActions("order", ["setOrderUser"]),
   },
   computed: {
     show: {
@@ -188,8 +203,8 @@ export default {
       },
       set(value) {
         this.$emit("input", value);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
