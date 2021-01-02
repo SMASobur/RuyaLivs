@@ -131,7 +131,7 @@ export const actions = {
         console.log("getOrderResponse", response);
         const orders = response.data.getOrderByUserId.orders;
         commit('SET_ORDERS', orders);
-    }
+    },
 
 }
 
