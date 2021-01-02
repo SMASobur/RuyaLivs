@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="show" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog
+    v-model="show"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="show = false">
@@ -15,84 +20,181 @@
       <v-container fluid>
         <v-stepper v-model="e1">
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">Your Information</v-stepper-step>
+            <v-stepper-step :complete="e1 > 1" step="1"
+              >Billing Information</v-stepper-step
+            >
             <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 2" step="2">Payment Method</v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step step="3">Order Competion</v-stepper-step>
+            <!-- <v-stepper-step :complete="e1 > 2" step="2"
+              >Payment Method</v-stepper-step
+            > -->
+            <!-- <v-divider></v-divider> -->
+            <v-stepper-step step="2">Order Completion</v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
             <!-- personal information starts -->
             <v-stepper-content step="1">
               <v-card tile outlined class="mb-2">
-                <v-card-title>Your information</v-card-title>
+                <v-card-title>Billing Information (fill the form to continue)</v-card-title>
                 <v-card-subtitle v-if="!authUserResponse.success">
-                  <v-alert
-                    dense
-                    border="left"
-                    type="warning"
-                    class="mt-4"
-                  >Missing information, you are not logged in</v-alert>
-                  <v-btn @click.stop="showLogin=true" depressed tile small color="accent">Login now</v-btn>
+                  <v-alert dense border="left" type="warning" class="mt-4"
+                    >Missing information, you are not logged in</v-alert
+                  >
+                  <v-btn
+                    @click.stop="showLogin = true"
+                    depressed
+                    tile
+                    small
+                    color="accent"
+                    >Login now</v-btn
+                  >
                 </v-card-subtitle>
                 <div class="mx-4">
                   <v-form v-model="isUserInfoValid">
-                    <v-text-field
-                      dense
-                      :ref="'aa'"
-                      type="text"
-                      @input="setOrderUserName"
-                      label="Full Name"
-                      :rules="nameRules"
-                      :value="orderUserInfo.fullName"
-                      outlined
-                    ></v-text-field>
-                    <v-text-field
-                      dense
-                      type="email"
-                      @input="setOrderUserEmail"
-                      label="Email"
-                      :rules="emailRules"
-                      :value="orderUserInfo.email"
-                      outlined
-                    ></v-text-field>
-                    <v-text-field
-                      dense
-                      type="text"
-                      @input="setOrderUserContactNo"
-                      :rules="emergencyContactNoRules"
-                      label="Emergency contact number"
-                      :value="orderUserInfo.emergencyContactNo"
-                      outlined
-                    ></v-text-field>
-                    <v-textarea
-                      v-if="orderType === 'Delivery'"
-                      placeholder="Address"
-                      @input="setOrderUserAddress"
-                      :rules="addressRules"
-                      :value="orderUserInfo.address"
-                      outlined
-                      clearable
-                    ></v-textarea>
+                    <v-row>
+                      <v-col>
+                        <v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserName"
+                          label="Full Name*"
+                          :rules="nameRules"
+                          :value="orderUserInfo.name"
+                          outlined
+                        ></v-text-field
+                      ></v-col>
+                      <v-col>
+                        <v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserContactNo"
+                          :rules="emergencyContactNoRules"
+                          label="Mobile No*"
+                          :value="orderUserInfo.phoneNo"
+                          outlined
+                        ></v-text-field
+                      ></v-col>
+                    </v-row>
+
+                    <v-row>
+                      <v-col>
+                        <v-textarea
+                          label="Address Line 1*"
+                          placeholder="Address Line 1"
+                          @input="setOrderUserAddress1"
+                          :rules="addressRules"
+                          :value="orderUserInfo.address[0]"
+                          rows="2"
+                          auto-grow
+                          outlined
+                          clearable
+                        ></v-textarea
+                      ></v-col>
+                      <v-col>
+                        <v-textarea
+                          label="Address Line 2"
+                          placeholder="Address Line 2"
+                          @input="setOrderUserAddress2"
+                          :value="orderUserInfo.address[1]"
+                          rows="2"
+                          auto-grow
+                          outlined
+                          clearable
+                        ></v-textarea
+                      ></v-col>
+                    </v-row>
+
+                    <v-row>
+                      <v-col
+                        ><v-text-field
+                          dense
+                          type="email"
+                          @input="setOrderUserEmail"
+                          label="Email*"
+                          :rules="emailRules"
+                          :value="orderUserInfo.email"
+                          outlined
+                        ></v-text-field
+                      ></v-col>
+                      <v-col>
+                        <v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserCity"
+                          label="City*"
+                          :rules="requiredFieldRule"
+                          :value="orderUserInfo.city"
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col
+                        ><v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserCountry"
+                          label="Country*"
+                          :rules="requiredFieldRule"
+                          :value="orderUserInfo.country"
+                          outlined
+                        ></v-text-field
+                      ></v-col>
+                      <v-col>
+                        <v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserPostalCode"
+                          label="Postal Code*"
+                          :rules="requiredFieldRule"
+                          :value="orderUserInfo.postalCode"
+                          outlined
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col md="6"
+                        ><v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserOrganizationNo"
+                          label="Organization No.*"
+                          :rules="requiredFieldRule"
+                          :value="orderUserInfo.organizationNo"
+                          outlined
+                        ></v-text-field
+                      ></v-col>
+                    </v-row>
                   </v-form>
                 </div>
               </v-card>
-              <v-btn :disabled="!isUserInfoValid" color="accent" @click="e1 = 2">Set Payment Method</v-btn>
+              <v-btn :disabled="!isUserInfoValid" color="accent" @click="e1 = 2"
+                >Order Completion</v-btn
+              >
             </v-stepper-content>
             <!-- personal information ends -->
 
             <!-- payment info starts -->
-            <v-stepper-content step="2">
+            <!-- <v-stepper-content step="2">
               <v-card tile outlined class="mb-2">
                 <v-card-title>Payment Method</v-card-title>
                 <v-card-subtitle>
-                  <v-radio-group @change="resetCardInfo" v-model="paymentMethod" row>
-                    <v-radio label="Card payment" value="Card payment"></v-radio>
-                    <v-radio label="Cash on delivery" value="Cash on delivery"></v-radio>
+                  <v-radio-group
+                    @change="resetCardInfo"
+                    v-model="paymentMethod"
+                    row
+                  >
+                    <v-radio
+                      label="Card payment"
+                      value="Card payment"
+                    ></v-radio>
+                    <v-radio
+                      label="Cash on delivery"
+                      value="Cash on delivery"
+                    ></v-radio>
                   </v-radio-group>
                 </v-card-subtitle>
-                <div class="mx-4" v-if="paymentMethod=='Card payment'">
+                <div class="mx-4" v-if="paymentMethod == 'Card payment'">
                   <v-text-field
                     dense
                     type="text"
@@ -111,82 +213,142 @@
                     apiKey="pk_test_CNBrx2glAUwnkNIUmxX2myBg005WiLZxnI"
                   ></v-stripe-card>
                 </div>
-                <div class="mx-4" v-else-if="paymentMethod=='Cash on delivery'">
+                <div
+                  class="mx-4"
+                  v-else-if="paymentMethod == 'Cash on delivery'"
+                >
                   <div class="d-flex align-center">
-                    <v-text-field v-model="contactNo" placeholder="Enter phone number" type="text"></v-text-field>
+                    <v-text-field
+                      v-model="contactNo"
+                      placeholder="Enter phone number"
+                      type="text"
+                    ></v-text-field>
                     <v-btn class="ml-2" color="accent">Send Code</v-btn>
                   </div>
                 </div>
               </v-card>
               <v-btn
                 color="accent"
-                :disabled="cardHolderName ==='' || token.card.last4 === ''"
+                :disabled="cardHolderName === '' || token.card.last4 === ''"
                 @click="e1 = 3"
-              >Order Completion</v-btn>
+                >Order Completion</v-btn
+              >
 
-              <!-- <v-btn text>Cancel</v-btn> -->
-            </v-stepper-content>
+
+            </v-stepper-content> -->
             <!-- payment info ends -->
 
             <!-- checkout summery starts-->
-            <v-stepper-content step="3">
+            <v-stepper-content step="2">
               <v-card tile outlined class="mb-4">
-                <v-card-title>User Information</v-card-title>
+                <v-card-title>Billing Information</v-card-title>
                 <v-row>
                   <v-col>
-                    <v-subheader>Delivery details</v-subheader>
+                    <!-- <v-subheader>Delivery details</v-subheader> -->
                     <v-list>
                       <v-list-item>
                         <v-list-item-content>
                           <v-list-item-subtitle>Name</v-list-item-subtitle>
-                          <v-list-item-title>{{orderUserInfo.fullName}}</v-list-item-title>
+                          <v-list-item-title>{{
+                            orderUserInfo.name
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-content>
                           <v-list-item-subtitle>Email</v-list-item-subtitle>
-                          <v-list-item-title>{{orderUserInfo.email}}</v-list-item-title>
+                          <v-list-item-title>{{
+                            orderUserInfo.email
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-list-item-subtitle>Contact No</v-list-item-subtitle>
-                          <v-list-item-title>{{orderUserInfo.emergencyContactNo}}</v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                      <v-list-item v-if="orderType==='Delivery'">
-                        <v-list-item-content>
-                          <v-list-item-subtitle>Address</v-list-item-subtitle>
-                          <v-list-item-title>{{orderUserInfo.address}}</v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                      <v-list-item>
-                        <v-list-item-content>
-                          <v-list-item-subtitle>Order Type</v-list-item-subtitle>
-                          <v-list-item-title>{{orderType}}</v-list-item-title>
+                          <v-list-item-subtitle
+                            >Contact No</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            orderUserInfo.phoneNo
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-list-item-subtitle>Order Note</v-list-item-subtitle>
-                          <v-list-item-title>{{deliveryNote}}</v-list-item-title>
+                          <v-list-item-subtitle
+                            >Address Line 1</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            orderUserInfo.address[0]
+                          }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item v-if="orderUserInfo.address[1]">
+                        <v-list-item-content>
+                          <v-list-item-subtitle
+                            >Address Line 2</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            orderUserInfo.address[1]
+                          }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-list-item-subtitle
+                            >Order Type</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{ orderType }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item v-if="deliveryNote">
+                        <v-list-item-content>
+                          <v-list-item-subtitle
+                            >Order Note</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            deliveryNote
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                     </v-list>
                   </v-col>
                   <v-col>
-                    <v-subheader>Payment details</v-subheader>
+                    <!-- <v-subheader>Payment details</v-subheader> -->
                     <v-list>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-list-item-subtitle>Card Holder</v-list-item-subtitle>
-                          <v-list-item-title>{{cardHolderName}}</v-list-item-title>
+                          <v-list-item-subtitle>Country</v-list-item-subtitle>
+                          <v-list-item-title>{{
+                            orderUserInfo.country
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-list-item-subtitle>Card Last 4 digit</v-list-item-subtitle>
-                          <v-list-item-title>{{token.card.last4}}</v-list-item-title>
+                          <v-list-item-subtitle>City</v-list-item-subtitle>
+                          <v-list-item-title>{{
+                            orderUserInfo.city
+                          }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-list-item-subtitle
+                            >Postal Code</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            orderUserInfo.postalCode
+                          }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-list-item-subtitle
+                            >Organization No.</v-list-item-subtitle
+                          >
+                          <v-list-item-title>{{
+                            orderUserInfo.organizationNo
+                          }}</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                     </v-list>
@@ -198,7 +360,12 @@
                 <v-col>
                   <v-card tile outlined class="mb-4">
                     <v-card-title>Order items</v-card-title>
-                    <ShoppingCart disableIncDec disableDelete hideTotal showQuantity></ShoppingCart>
+                    <ShoppingCart
+                      disableIncDec
+                      disableDelete
+                      hideTotal
+                      showQuantity
+                    ></ShoppingCart>
                   </v-card>
                 </v-col>
                 <v-col>
@@ -211,7 +378,9 @@
                         </v-list-item-content>
                         <v-spacer></v-spacer>
                         <v-list-item-action>
-                          <v-list-item-title>{{cartTotalPrice}}</v-list-item-title>
+                          <v-list-item-title>{{
+                            cartTotalPrice
+                          }}</v-list-item-title>
                         </v-list-item-action>
                       </v-list-item>
                       <v-list-item>
@@ -220,7 +389,9 @@
                         </v-list-item-content>
                         <v-spacer></v-spacer>
                         <v-list-item-action>
-                          <v-list-item-title>{{devliveryCharge}}</v-list-item-title>
+                          <v-list-item-title>{{
+                            devliveryCharge
+                          }}</v-list-item-title>
                         </v-list-item-action>
                       </v-list-item>
                       <v-list-item>
@@ -228,17 +399,21 @@
                           <v-list-item-title>Total</v-list-item-title>
                         </v-list-item-content>
                         <v-list-item-action>
-                          <v-list-item-title>{{totalCost}}</v-list-item-title>
+                          <v-list-item-title>{{ totalCost }}</v-list-item-title>
                         </v-list-item-action>
                       </v-list-item>
                       <v-divider></v-divider>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-list-item-title class="font-weight-bold">Payable Total</v-list-item-title>
+                          <v-list-item-title class="font-weight-bold"
+                            >Payable Total</v-list-item-title
+                          >
                         </v-list-item-content>
                         <v-spacer></v-spacer>
                         <v-list-item-action>
-                          <v-list-item-title class="font-weight-bold">{{totalCost}}</v-list-item-title>
+                          <v-list-item-title class="font-weight-bold">{{
+                            totalCost
+                          }}</v-list-item-title>
                         </v-list-item-action>
                       </v-list-item>
                     </v-list>
@@ -247,7 +422,10 @@
                 </v-col>
               </v-row>
 
-              <v-btn :loading="loading" color="accent" @click="onSubmit()">Complete Order</v-btn>
+              <v-btn color="accent" @click="onGoBack">Go back</v-btn>
+              <v-btn :loading="loading" color="accent" @click="onSubmit()"
+                >Complete Order</v-btn
+              >
             </v-stepper-content>
             <!--  -->
           </v-stepper-items>
@@ -255,7 +433,7 @@
       </v-container>
     </v-card>
 
-    <UserLogin v-model="showLogin" />
+    <UserLogin v-model="showLogin" userType="USER" />
   </v-dialog>
 </template>
 
@@ -269,10 +447,10 @@ import addOrderGql from "@/gql/mutation/addOrder.gql";
 export default {
   components: {
     UserLogin,
-    ShoppingCart
+    ShoppingCart,
   },
   props: {
-    value: Boolean
+    value: Boolean,
   },
   data() {
     return {
@@ -291,13 +469,13 @@ export default {
           country: "",
           exp_year: "",
           exp_month: "",
-          last4: ""
-        }
+          last4: "",
+        },
       },
       e1: "1",
       isUserInfoValid: false,
       formUserFullName: "",
-      ...authRules
+      ...authRules,
     };
   },
   methods: {
@@ -322,19 +500,19 @@ export default {
       const order = {
         orderBy: this.authUser.id,
         items: this.orderItems,
-        orderAddress: this.orderAddress,
+        orderAddress: this.orderUserInfo,
         orderType: this.deliveryMethod,
         deliveryCharge: deliveryCharge,
         orderNote: this.deliveryNote,
         totalCost: this.cartTotalPrice,
-        paymentToken: this.token.id
+        // paymentToken: this.token.id,
       };
 
       // console.log("add order", order);
       try {
         const response = await this.$apollo.mutate({
           mutation: addOrderGql,
-          variables: { order }
+          variables: { order },
         });
         const data = response.data.addOrder;
         console.log("addOrder", data);
@@ -347,7 +525,7 @@ export default {
         this.resetOrder();
         this.$notifier.showMessage({
           content: data.message,
-          color: color
+          color: color,
         });
 
         // await this.$apolloHelpers.onLogin(res.token);
@@ -356,20 +534,30 @@ export default {
         this.loading = false;
       }
     },
+    onGoBack() {
+      this.e1 = 1;
+    },
 
     ...mapActions("order", [
       "setOrderUserName",
-      "setOrderUserEmail",
+      "setOrderUserAddress1",
+      "setOrderUserAddress2",
       "setOrderUserContactNo",
-      "setOrderUserAddress",
+      "setOrderUserEmail",
+      "setOrderUserCity",
+      "setOrderUserPostalCode",
+      "setOrderUserCountry",
+      "setOrderUserOrganizationNo",
       "clearOrderNote",
-      "resetOrderType"
+      "resetOrderType",
+      "resetOrderAddress"
     ]),
 
     resetOrder() {
       this.resetCart();
       this.clearOrderNote();
       this.resetOrderType();
+      this.resetOrderAddress();
       this.$router.push("/order");
     },
 
@@ -378,7 +566,7 @@ export default {
     showOderCompleteMessage() {
       this.$notifier.showMessage({
         content: "Order completed successfully",
-        color: "success"
+        color: "success",
       });
     },
     resetCardInfo() {
@@ -388,10 +576,10 @@ export default {
           country: "",
           exp_year: "",
           exp_month: "",
-          last4: ""
-        }
+          last4: "",
+        },
       };
-    }
+    },
   },
   computed: {
     show: {
@@ -400,32 +588,23 @@ export default {
       },
       set(value) {
         this.$emit("input", value);
-      }
+      },
     },
     ...mapGetters("menu", ["cartItems", "orderItems", "cartTotalPrice"]),
     ...mapGetters("auth", ["authUser", "authUserResponse"]),
     ...mapGetters("order", [
       "orderType",
       "deliveryMethod",
-      "orderUser",
       "deliveryNote",
-      "orderAddress"
+      "getOrderAddress",
     ]),
     totalCost() {
       return this.devliveryCharge + this.cartTotalPrice;
     },
     orderUserInfo() {
-      if (this.orderUser) return this.orderUser;
-      return orderUser => {};
+      if (this.getOrderAddress) return this.getOrderAddress;
+      return (getOrderAddress) => {};
     },
-    orderAddress() {
-      return {
-        fullName: this.orderUser.fullName,
-        email: this.orderUser.email,
-        emergencyContactNo: this.orderUser.emergencyContactNo,
-        address: this.orderUser.address
-      };
-    }
-  }
+  },
 };
 </script>

@@ -118,7 +118,7 @@ export default {
         console.log("login user", data);
         if (data.success) {
           this.setAuthUser(data.user);
-          if (this.userType == "USER") this.setOrderUser(data.user);
+          // if (this.userType == "USER") this.setOrderUser(data.user);
           await this.$apolloHelpers.onLogin(data.token);
           const loginResponse = {
             code: data.code,

@@ -19,7 +19,10 @@
             </v-toolbar>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-btn x-small tile color="primary" @click="onPressShowOrder(item.order)">Details</v-btn>
+            <v-btn x-small tile color="accent" @click="onPressShowOrder(item.order)">Details</v-btn>
+            <v-btn x-small tile color="primary">Accept</v-btn>
+            <v-btn x-small tile color="warning">Reject</v-btn>
+
           </template>
         </v-data-table>
       </client-only>
@@ -27,36 +30,7 @@
     <v-dialog v-model="orderDialog" max-width="700px">
       <SingleOrder :order="order" />
     </v-dialog>
-    <!-- <v-dialog v-model="confirmDialog" persistent max-width="290">
-      <v-card>
-        <v-card-title v-if="clickedButton=='ACCEPTED'" class="headline">Confirm reservtaion ?</v-card-title>
-        <v-card-title v-if="clickedButton=='CANCELLED'" class="headline">Cancel Reservation ?</v-card-title>
-        <v-card-text
-          v-if="clickedButton=='ACCEPTED'"
-        >If you confirm the reservation, user will be notified.</v-card-text>
-        <v-card-text
-          v-if="clickedButton=='CANCELLED'"
-        >If you cancel the reservation, user will be notified.</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="confirmDialog = false">Close</v-btn>
-          <v-btn
-            v-if="clickedButton=='ACCEPTED'"
-            color="success"
-            text
-            :loading="loadingStatusUpdate"
-            @click="updateReservationStatus"
-          >Confirm Reservation</v-btn>
-          <v-btn
-            v-if="clickedButton=='CANCELLED'"
-            color="warning"
-            text
-            :loading="loadingStatusUpdate"
-            @click="updateReservationStatus"
-          >Cancel Reservation</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog> -->
+
   </v-row>
 </template>
 

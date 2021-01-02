@@ -157,7 +157,7 @@ export default {
         });
         const data = response.data.addUser;
         this.setAuthUser(data.user);
-        this.setOrderUser(data.user);
+        // this.setOrderUser(data.user);
         this.$cookies.set("user-id", data.user.id, {
           path: "/",
           maxAge: 60 * 60 * 24 * 365,

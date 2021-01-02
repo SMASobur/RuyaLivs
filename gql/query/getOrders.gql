@@ -14,8 +14,8 @@ query getOrders($input:GetOrdersInput){
       deliveryCharge
       prepareTime
       orderAddress{
-        fullName
-        emergencyContactNo
+        name
+        phoneNo
         address
       }
       orderBy{
