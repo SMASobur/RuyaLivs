@@ -17,7 +17,7 @@
       <p>
         You have not placed any order yet ! Go to menu and place an order now.
       </p>
-      <v-btn tile to="/menu" color="accent">Menu</v-btn>
+      <v-btn tile to="/shop" color="accent">Menu</v-btn>
     </div>
 
     <!-- <div v-else-if="orders.length !== 0 && !$fetchState.pending"> -->
