@@ -33,8 +33,8 @@ export default {
 
 <style>
 .v-slide-group__wrapper {
-  touch-action: auto !important;
-  /* touch-action: pan-y !important */
+  /* touch-action: auto !important; */
+  touch-action: pan-y !important
 }
 </style>
 
