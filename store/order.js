@@ -1,4 +1,5 @@
 import getOrdersByUserIdQuery from "../gql/query/getOrdersByUserId.gql";
+import acceptOrderGql from "@/gql/mutation/acceptOrder.gql";
 
 export const state = () => ({
     orderType: "Delivery",
@@ -131,6 +132,25 @@ export const actions = {
         console.log("getOrderResponse", response);
         const orders = response.data.getOrderByUserId.orders;
         commit('SET_ORDERS', orders);
+    },
+    async acceptOrder({ commit }, orderId) {
+        try {
+
+            let client = this.app.apolloProvider.defaultClient;
+            const input = {
+                id: orderId
+            };
+            const response = await client.mutate({
+                mutation: acceptOrderGql,
+                variables: { input },
+            });
+            const data = response.data.acceptOrder;
+            console.log('accept order data', data);
+            return data;
+
+        } catch (error) {
+            console.log('accept order error', error);
+        }
     },
 
 }

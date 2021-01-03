@@ -154,6 +154,7 @@ export default {
     };
   },
   methods: {
+
     onCloseClicked() {
       this.$emit("onCloseClicked");
     },

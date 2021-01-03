@@ -128,7 +128,7 @@ export default {
           };
           this.setAuthResponse(loginResponse);
           if (this.userType == "ADMIN")
-            this.$router.push("/admin/menu/show_menu");
+            this.$router.push("/admin/order/all_orders");
           else this.closeLoginDialog();
           this.$cookies.set("user-id", data.user.id, {
             path: "/",
