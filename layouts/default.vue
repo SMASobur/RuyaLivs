@@ -173,8 +173,8 @@
         <v-icon>mdi-cart</v-icon>
       </v-btn>
       <v-btn to="/order">
-        <span>About</span>
-        <v-icon>mdi-book-open-page-variant</v-icon>
+        <span>My Order</span>
+        <v-icon>mdi-shopping</v-icon>
       </v-btn>
       <!-- <v-btn to="reservation">
         <span>Reservation</span>
