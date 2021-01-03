@@ -103,8 +103,8 @@ export default {
     clientConfigs: {
       default: {
         // required
-        httpEndpoint: 'http://localhost:4000/graphql',
-        // httpEndpoint: 'https://nawras-server.herokuapp.com/graphql',
+        // httpEndpoint: 'http://localhost:4000/graphql',
+        httpEndpoint: 'https://nawras-server.herokuapp.com/graphql',
         // optional
         // override HTTP endpoint in browser only
         // browserHttpEndpoint: '/graphql',

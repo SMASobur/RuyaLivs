@@ -18,6 +18,29 @@
               <v-toolbar-title>All Orders</v-toolbar-title>
             </v-toolbar>
           </template>
+          <template v-slot:item.orderStatus="{ item }">
+            <v-chip
+              v-if="item.order.orderStatus === 'ACCEPTED'"
+              color="success"
+              small
+            >
+              ACCEPTED
+            </v-chip>
+            <v-chip
+              v-if="item.order.orderStatus === 'REJECTED'"
+              color="error"
+              small
+            >
+              REJECTED
+            </v-chip>
+            <v-chip
+              v-if="item.order.orderStatus === 'PENDING'"
+              color="warning"
+              small
+            >
+              PENDING
+            </v-chip>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-btn
               x-small
@@ -27,16 +50,27 @@
               >Details</v-btn
             >
             <v-btn
+              v-if="item.order.orderStatus === 'PENDING'"
               x-small
               tile
-              color="primary"
+              color="success"
               :loading="
                 selectedItem && item.id === selectedItem.id && acceptInProgress
               "
               @click="onClcikAcceptOrder(item.order)"
               >Accept</v-btn
             >
-            <v-btn x-small tile color="warning">Reject</v-btn>
+            <v-btn
+              v-if="item.order.orderStatus === 'PENDING'"
+              x-small
+              tile
+              color="error"
+              :loading="
+                selectedItem && item.id === selectedItem.id && rejectInProgress
+              "
+              @click="onClcikRejectOrder(item.order)"
+              >Reject</v-btn
+            >
           </template>
         </v-data-table>
       </client-only>
@@ -46,12 +80,21 @@
     </v-dialog>
     <div v-if="selectedItem">
       <OrderAcceptDialog
-        heading="Are you sure you want to accept the order ?"
         :shouldOpen="shouldShowAcceptDialog"
         @onclickClose="onClickCloseAcceptOrder"
         @onAcceptRequestStarted="onAcceptRequestStarted"
         @onAcceptRequestCompleted="onAcceptRequestCompleted"
         @onAcceptRequestSucess="onAcceptRequestSucess"
+        :orderId="selectedItem.id"
+      />
+    </div>
+    <div v-if="selectedItem">
+      <OrderRejectDialog
+        :shouldOpen="shouldShowRejectDialog"
+        @onclickClose="onClickCloseAcceptOrder"
+        @onRejectRequestStarted="onRejectRequestStarted"
+        @onRejectRequestCompleted="onRejectRequestCompleted"
+        @onRejectRequestSucess="onRejectRequestSucess"
         :orderId="selectedItem.id"
       />
     </div>
@@ -62,6 +105,7 @@
 import allOrdersQuery from "@/gql/query/getOrders.gql";
 import SingleOrder from "@/components/SingleOrder.vue";
 import OrderAcceptDialog from "@/components/dialogs/OrderAcceptDialog.vue";
+import OrderRejectDialog from "@/components/dialogs/OrderRejectDialog.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -72,6 +116,7 @@ export default {
   components: {
     SingleOrder,
     OrderAcceptDialog,
+    OrderRejectDialog,
   },
   data() {
     return {
@@ -106,31 +151,50 @@ export default {
       acceptInProgress: false,
       rejectInProgress: false,
       shouldShowAcceptDialog: false,
-      shouldCloseAcceptDialog: false,
+      shouldShowRejectDialog: false,
     };
   },
   methods: {
-    async onClcikAcceptOrder(item) {
+    onClcikAcceptOrder(item) {
       this.selectedItem = item;
       console.log("accepted item", this.selectedItem);
       this.shouldShowAcceptDialog = true;
     },
+    onClcikRejectOrder(item) {
+      this.selectedItem = item;
+      console.log("rejected item", this.selectedItem);
+      this.shouldShowRejectDialog = true;
+    },
     onClickCloseAcceptOrder() {
       // console.log('onClickClose callded');
       this.shouldShowAcceptDialog = false;
+      this.shouldShowRejectDialog = false;
     },
     onAcceptRequestStarted() {
       this.acceptInProgress = true;
     },
+    onRejectRequestStarted() {
+      this.rejectInProgress = true;
+    },
     onAcceptRequestSucess(data) {
       this.selectedItem.orderStatus = "ACCEPTED";
       this.$notifier.showMessage({
-            content: data,
-            color: "primary",
-          });
+        content: data,
+        color: "primary",
+      });
+    },
+    onRejectRequestSucess(data) {
+      this.selectedItem.orderStatus = "REJECTED";
+      this.$notifier.showMessage({
+        content: data,
+        color: "primary",
+      });
     },
     onAcceptRequestCompleted() {
       this.acceptInProgress = false;
+    },
+    onRejectRequestCompleted() {
+      this.rejectInProgress = false;
     },
 
     async fetchOrders() {

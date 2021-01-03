@@ -1,16 +1,17 @@
 <template>
   <v-dialog persistent v-model="shouldOpen" max-width="500px">
     <v-card>
-      <v-card-title>Are you sure you want to accept the order ?</v-card-title>
+      <v-card-title>Are you sure you want to reject this order ?</v-card-title>
       <v-card-text>
         This action is unchangeable.So, be careful before peroceed the action
       </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="warning" :disabled="loading" text @click="onClickClose"
           >Cancel</v-btn
         >
-        <v-btn color="success" :loading="loading" text @click="onOrderAccepted"
+        <v-btn color="success" :loading="loading" text @click="onOrderRejected"
           >OK</v-btn
         >
       </v-card-actions>
@@ -37,26 +38,26 @@ export default {
     };
   },
   methods: {
-    ...mapActions("order", ["acceptOrder"]),
+    ...mapActions("order", ["rejectOrder"]),
     onClickClose() {
       // console.log('onclickClose emiited');
       this.$emit("onclickClose");
     },
-    async onOrderAccepted() {
+    async onOrderRejected() {
       try {
         this.loading = true;
-        this.$emit("onAcceptRequestStarted");
-        const orderAcceptData = await this.acceptOrder(this.orderId);
-        console.log("orderAcceptData", orderAcceptData);
-        if (orderAcceptData.success) {
+        this.$emit("onRejectRequestStarted");
+        const orderRejectData = await this.rejectOrder(this.orderId);
+        console.log("orderRejectData", orderRejectData);
+        if (orderRejectData.success) {
           this.$emit("onclickClose");
-          this.$emit("onAcceptRequestSucess", orderAcceptData.message);
+          this.$emit("onRejectRequestSucess", orderRejectData.message);
         }
       } catch (error) {
-        console.log("acceptOrder error", error);
+        console.log("rejectOrder error", error);
       } finally {
         this.loading = false;
-        this.$emit("onAcceptRequestCompleted");
+        this.$emit("onRejectRequestCompleted");
       }
     },
   },
