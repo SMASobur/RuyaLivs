@@ -38,3 +38,10 @@ export default {
     },
     requiredFieldRule: [v => !!v || "This field is required"]
 }
+
+const requiredNumberRules = [
+    v => !!v || "This field is required",
+    v => /^\d+(,\d{1,2})?$/.test(v) || "Must be an integer number"
+]
+
+export {requiredNumberRules}

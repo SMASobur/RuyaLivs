@@ -1,10 +1,9 @@
-query getOrders($input:GetOrdersInput){
-  getOrders(input:$input){
+query getOrder($input:GetOrderInput){
+  getOrder(input:$input){
     code
     success
     message
-    count
-    orders{
+    order{
       id
       createdAt
       orderType
@@ -17,6 +16,11 @@ query getOrders($input:GetOrdersInput){
         name
         phoneNo
         address
+        email
+        city
+        country
+        postalCode
+        organizationNo
       }
       orderBy{
         firstName

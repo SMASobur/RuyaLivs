@@ -88,9 +88,9 @@ export default {
     defaultOptions: {
       // See 'apollo' definition
       // For example: default query options
-      // $query: {
-      //   fetchPolicy: 'no-cache',
-      // },
+      $query: {
+        fetchPolicy: 'no-cache',
+      },
 
     },
 

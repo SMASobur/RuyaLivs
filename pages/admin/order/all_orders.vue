@@ -42,11 +42,7 @@
             </v-chip>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-btn
-              x-small
-              tile
-              color="accent"
-              @click="onPressShowOrder(item.order)"
+            <v-btn x-small tile color="accent" :to="`/admin/order/${item.order.id}`"
               >Details</v-btn
             >
             <v-btn

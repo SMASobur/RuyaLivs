@@ -1,6 +1,8 @@
-import getOrdersByUserIdQuery from "../gql/query/getOrdersByUserId.gql";
+import getOrdersByUserIdQuery from "@/gql/query/getOrdersByUserId.gql";
+import getOrderQuery from "@/gql/query/getOrder.gql";
 import acceptOrderGql from "@/gql/mutation/acceptOrder.gql";
 import updateOrderStatusGql from "@/gql/mutation/updateOrderStatus.gql";
+import updateCartItemsGql from "@/gql/mutation/updateCartItems.gql";
 
 export const state = () => ({
     orderType: "Delivery",
@@ -173,6 +175,40 @@ export const actions = {
             console.log('rejectOrder error', error);
         }
     },
+    async getOrder({ commit }, orderId) {
+        try {
+            let client = this.app.apolloProvider.defaultClient;
+            const input = {
+                orderId: orderId,
+            };
+            const response = await client.query({
+                query: getOrderQuery,
+                variables: { input },
+                fetchPolicy: 'network-only'
+            });
+            const data = response.data.getOrder;
+            return data;
+
+        } catch (error) {
+            console.log('getOrder error', error);
+        }
+    },
+    async updateOrderItems(commit, input) {
+        try {
+            let client = this.app.apolloProvider.defaultClient;
+            console.log('updateOrderItems input', input);
+
+            const response = await client.mutate({
+                mutation: updateCartItemsGql,
+                variables: { input }
+            });
+            const data = response.data.updateCartItems;
+            return data;
+
+        } catch (error) {
+            console.log('getOrder error', error);
+        }
+    }
 
 }
 

@@ -1,0 +1,18 @@
+mutation updateCartItems($input: UpdateCartItemsInput) {
+  updateCartItems(input: $input) {
+    code
+    success
+    message
+    cart{
+      id
+      cartItems{
+        productId
+        productName
+        pricePerUnit
+        productQuantity
+        productSize
+      }
+      totalCost
+    }
+  }
+}

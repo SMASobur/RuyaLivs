@@ -2,19 +2,30 @@
   <v-app>
     <!-- navigation drawer starts -->
     <v-navigation-drawer v-model="drawer" disable-resize-watcher fixed app>
-
-      <div v-if="authUserResponse.success">
+      <!-- <div v-if="authUserResponse.success">
         <v-list-item two-line>
           <v-list-item-avatar>
             <img src="/img/users/icon_user.png" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{authUser.firstName}} {{authUser.lastName}}</v-list-item-title>
-            <v-list-item-subtitle>{{authUser.userType}}</v-list-item-subtitle>
+            <v-list-item-title
+              >{{ authUser.firstName }}
+              {{ authUser.lastName }}</v-list-item-title
+            >
+            <v-list-item-subtitle>{{ authUser.userType }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-      </div>
+      </div> -->
+
+      <v-sheet v-if="authUserResponse.success" color="grey lighten-4" class="pa-4">
+        <v-avatar class="mb-4" color="grey darken-1" size="64">
+          <img src="/img/users/icon_user.png" />
+        </v-avatar>
+
+        <div>{{ authUser.firstName }} {{ authUser.lastName }} ({{ authUser.userType }})</div>
+
+      </v-sheet>
 
       <v-list dense>
         <template v-for="(item, i) in menus">
@@ -62,7 +73,13 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
 
-      <v-btn outlined  v-if="authUserResponse.success" @click="onLogout" text  class="ml-2">
+      <v-btn
+        outlined
+        v-if="authUserResponse.success"
+        @click="onLogout"
+        text
+        class="ml-2"
+      >
         <v-icon left>mdi-account</v-icon> LOGOUT
       </v-btn>
 
@@ -101,7 +118,7 @@ export default {
       this.removeAuthUser();
       this.$cookies.remove("user-id");
       this.$cookies.remove("loggedInUser");
-      this.$router.push("/admin/login")
+      this.$router.push("/admin/login");
     },
     ...mapActions("auth", ["removeAuthResponse", "removeAuthUser"]),
   },
