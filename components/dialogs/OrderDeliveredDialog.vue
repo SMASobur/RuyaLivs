@@ -1,16 +1,17 @@
 <template>
   <v-dialog persistent v-model="shouldOpen" max-width="500px">
     <v-card>
-      <v-card-title>Are you sure you want to accept the order ?</v-card-title>
+      <v-card-title>Are you sure you this order is delivered ?</v-card-title>
       <v-card-text>
         This action is unchangeable.So, be careful before peroceed the action
       </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="accent" :disabled="loading" text @click="onClickClose"
           >Cancel</v-btn
         >
-        <v-btn color="accent" :loading="loading" text @click="onOrderAccepted"
+        <v-btn color="accent" :loading="loading" text @click="onOrderDelivered"
           >OK</v-btn
         >
       </v-card-actions>
@@ -37,26 +38,27 @@ export default {
     };
   },
   methods: {
-    ...mapActions("order", ["acceptOrder"]),
+    ...mapActions("order", ["deliveredOrder"]),
     onClickClose() {
       // console.log('onclickClose emiited');
       this.$emit("onclickClose");
     },
-    async onOrderAccepted() {
+    async onOrderDelivered() {
       try {
         this.loading = true;
-        this.$emit("onAcceptRequestStarted");
-        const orderAcceptData = await this.acceptOrder(this.orderId);
-        console.log("orderAcceptData", orderAcceptData);
-        if (orderAcceptData.success) {
+        this.$emit("onDeliveredRequestStarted");
+        const orderDeliveredData = await this.deliveredOrder(this.orderId);
+        // return;
+        console.log("orderDeliveredData", orderDeliveredData);
+        if (orderDeliveredData.success) {
           this.$emit("onclickClose");
-          this.$emit("onAcceptRequestSucess", orderAcceptData.message);
+          this.$emit("onDeliveredRequestSuccess", orderDeliveredData.message);
         }
       } catch (error) {
-        console.log("acceptOrder error", error);
+        console.log("orderDelivered error", error);
       } finally {
         this.loading = false;
-        this.$emit("onAcceptRequestCompleted");
+        this.$emit("onOrderDeliveredCompleted");
       }
     },
   },

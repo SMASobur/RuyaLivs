@@ -14,35 +14,68 @@
           loading-text="Loading orders..."
         >
           <template v-slot:top>
-            <v-toolbar flat color="white">
-              <v-toolbar-title>All Orders</v-toolbar-title>
-            </v-toolbar>
+            <div>
+              <div>
+                <v-toolbar flat color="white">
+                  <v-toolbar-title>All Orders</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn-toggle
+                      v-model="orderStatus"
+                      rounded
+                      color="accent"
+                      dense
+                      mandatory
+                      @change="onChangeOrderStatus"
+                    >
+                      <v-btn value="ALL"> ALL </v-btn>
+                      <v-btn value="PENDING"> PENDING </v-btn>
+                      <v-btn value="ACCEPTED"> ACCEPTED </v-btn>
+                      <v-btn value="REJECTED"> REJECTED </v-btn>
+                      <v-btn value="DELIVERED"> DELIVERED </v-btn>
+                    </v-btn-toggle>
+                  </div>
+                </v-toolbar>
+              </div>
+            </div>
           </template>
           <template v-slot:item.orderStatus="{ item }">
             <v-chip
               v-if="item.order.orderStatus === 'ACCEPTED'"
               color="success"
-              small
+              x-small
             >
               ACCEPTED
             </v-chip>
             <v-chip
               v-if="item.order.orderStatus === 'REJECTED'"
               color="error"
-              small
+              x-small
             >
               REJECTED
             </v-chip>
             <v-chip
               v-if="item.order.orderStatus === 'PENDING'"
               color="warning"
-              small
+              x-small
             >
               PENDING
             </v-chip>
+            <v-chip
+              v-if="item.order.orderStatus === 'DELIVERED'"
+              color="purple"
+              x-small
+              dark
+            >
+              DELIVERED
+            </v-chip>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-btn x-small tile color="accent" :to="`/admin/order/${item.order.id}`"
+            <v-btn
+              x-small
+              tile
+              color="accent"
+              :to="`/admin/order/${item.order.id}`"
               >Details</v-btn
             >
             <v-btn
@@ -57,7 +90,22 @@
               >Accept</v-btn
             >
             <v-btn
-              v-if="item.order.orderStatus === 'PENDING'"
+              v-if="item.order.orderStatus === 'ACCEPTED'"
+              x-small
+              tile
+              dark
+              color="purple"
+              :loading="
+                selectedItem && item.id === selectedItem.id && deliveredInProgress
+              "
+              @click="onClcikOrderDelivered(item.order)"
+              >Complete delivery</v-btn
+            >
+            <v-btn
+              v-if="
+                item.order.orderStatus != 'DELIVERED' &&
+                item.order.orderStatus != 'REJECTED'
+              "
               x-small
               tile
               color="error"
@@ -94,6 +142,16 @@
         :orderId="selectedItem.id"
       />
     </div>
+    <div v-if="selectedItem">
+      <OrderDeliveredDialog
+        :shouldOpen="shouldShowDeliveredDialog"
+        @onclickClose="onClickCloseOrderDelivered"
+        @onDeliveredRequestStarted="onDeliveredRequestStarted"
+        @onOrderDeliveredCompleted="onOrderDeliveredCompleted"
+        @onDeliveredRequestSuccess="onDeliveredRequestSuccess"
+        :orderId="selectedItem.id"
+      />
+    </div>
   </v-row>
 </template>
 
@@ -102,6 +160,7 @@ import allOrdersQuery from "@/gql/query/getOrders.gql";
 import SingleOrder from "@/components/SingleOrder.vue";
 import OrderAcceptDialog from "@/components/dialogs/OrderAcceptDialog.vue";
 import OrderRejectDialog from "@/components/dialogs/OrderRejectDialog.vue";
+import OrderDeliveredDialog from "@/components/dialogs/OrderDeliveredDialog.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -113,14 +172,16 @@ export default {
     SingleOrder,
     OrderAcceptDialog,
     OrderRejectDialog,
+    OrderDeliveredDialog,
   },
   data() {
     return {
       orderPayload: {
         pageNo: 1,
-        limit: 15,
+        limit: 10,
         status: [],
       },
+      orderStatus: "ALL",
       orders: [],
       totalOrderCount: 0,
       headers: [
@@ -129,7 +190,7 @@ export default {
         { text: "Order ID", value: "id" },
         { text: "Order Type", value: "orderType" },
         { text: "Order Status", value: "orderStatus" },
-        { text: "Delivery Status", value: "deliveryStatus" },
+        // { text: "Delivery Status", value: "deliveryStatus" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       orderDialog: false,
@@ -146,53 +207,13 @@ export default {
       loadingOrders: false,
       acceptInProgress: false,
       rejectInProgress: false,
+      deliveredInProgress: false,
       shouldShowAcceptDialog: false,
       shouldShowRejectDialog: false,
+      shouldShowDeliveredDialog: false,
     };
   },
   methods: {
-    onClcikAcceptOrder(item) {
-      this.selectedItem = item;
-      console.log("accepted item", this.selectedItem);
-      this.shouldShowAcceptDialog = true;
-    },
-    onClcikRejectOrder(item) {
-      this.selectedItem = item;
-      console.log("rejected item", this.selectedItem);
-      this.shouldShowRejectDialog = true;
-    },
-    onClickCloseAcceptOrder() {
-      // console.log('onClickClose callded');
-      this.shouldShowAcceptDialog = false;
-      this.shouldShowRejectDialog = false;
-    },
-    onAcceptRequestStarted() {
-      this.acceptInProgress = true;
-    },
-    onRejectRequestStarted() {
-      this.rejectInProgress = true;
-    },
-    onAcceptRequestSucess(data) {
-      this.selectedItem.orderStatus = "ACCEPTED";
-      this.$notifier.showMessage({
-        content: data,
-        color: "primary",
-      });
-    },
-    onRejectRequestSucess(data) {
-      this.selectedItem.orderStatus = "REJECTED";
-      this.$notifier.showMessage({
-        content: data,
-        color: "primary",
-      });
-    },
-    onAcceptRequestCompleted() {
-      this.acceptInProgress = false;
-    },
-    onRejectRequestCompleted() {
-      this.rejectInProgress = false;
-    },
-
     async fetchOrders() {
       try {
         this.loadingOrders = true;
@@ -215,6 +236,75 @@ export default {
           color: "error",
         });
       }
+    },
+    onClcikAcceptOrder(item) {
+      this.selectedItem = item;
+      console.log("accepted item", this.selectedItem);
+      this.shouldShowAcceptDialog = true;
+    },
+    onClcikRejectOrder(item) {
+      this.selectedItem = item;
+      console.log("rejected item", this.selectedItem);
+      this.shouldShowRejectDialog = true;
+    },
+    onClcikOrderDelivered(item) {
+      this.selectedItem = item;
+      console.log("delivered item", this.selectedItem);
+      this.shouldShowDeliveredDialog = true;
+    },
+    onClickCloseAcceptOrder() {
+      // console.log('onClickClose callded');
+      this.shouldShowAcceptDialog = false;
+      this.shouldShowRejectDialog = false;
+    },
+    onClickCloseOrderDelivered() {
+      this.shouldShowDeliveredDialog = false;
+    },
+    onAcceptRequestStarted() {
+      this.acceptInProgress = true;
+    },
+    onRejectRequestStarted() {
+      this.rejectInProgress = true;
+    },
+    onDeliveredRequestStarted() {
+      this.deliveredInProgress = true;
+    },
+    onAcceptRequestSucess(data) {
+      this.selectedItem.orderStatus = "ACCEPTED";
+      this.$notifier.showMessage({
+        content: data,
+        color: "accent",
+      });
+    },
+    onRejectRequestSucess(data) {
+      this.selectedItem.orderStatus = "REJECTED";
+      this.$notifier.showMessage({
+        content: data,
+        color: "accent",
+      });
+    },
+    onDeliveredRequestSuccess(data) {
+      this.selectedItem.orderStatus = "DELIVERED";
+      this.$notifier.showMessage({
+        content: data,
+        color: "accent",
+      });
+    },
+    onAcceptRequestCompleted() {
+      this.acceptInProgress = false;
+    },
+    onRejectRequestCompleted() {
+      this.rejectInProgress = false;
+    },
+    onOrderDeliveredCompleted() {
+      this.deliveredInProgress = false;
+    },
+
+    async onChangeOrderStatus(val) {
+      console.log("onChangeOrderStatus", val);
+      if (val === "ALL") this.orderPayload.status = [];
+      else this.orderPayload.status = val;
+      await this.fetchOrders();
     },
 
     onPagination(val) {

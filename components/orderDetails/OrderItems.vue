@@ -14,12 +14,20 @@
         <template v-slot:item.totalPrice="{ item }">
           {{ item.pricePerUnit * item.productQuantity }}
         </template>
+        <template v-slot:body.append>
+          <tr>
+            <td><div class="headning">Total cost:</div></td>
+            <td></td>
+            <td>
+
+            </td>
+            <td>
+              {{ items.totalCost }}
+            </td>
+            <td colspan="4"></td>
+          </tr>
+        </template>
       </v-data-table>
-      <v-divider />
-      <div  class="d-flex justify-space-between my-4" style="margin-end: 12em; margin-start: 1em;">
-        <div class="headning">Total cost:</div>
-        <div> {{ items.totalCost }}</div>
-      </div>
     </v-card>
   </div>
 </template>

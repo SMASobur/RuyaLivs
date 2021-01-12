@@ -8,10 +8,10 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="warning" :disabled="loading" text @click="onClickClose"
+        <v-btn color="accent" :disabled="loading" text @click="onClickClose"
           >Cancel</v-btn
         >
-        <v-btn color="success" :loading="loading" text @click="onOrderRejected"
+        <v-btn color="accent" :loading="loading" text @click="onOrderRejected"
           >OK</v-btn
         >
       </v-card-actions>

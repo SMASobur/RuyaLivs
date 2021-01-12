@@ -175,6 +175,26 @@ export const actions = {
             console.log('rejectOrder error', error);
         }
     },
+    async deliveredOrder({ commit }, orderId) {
+        try {
+
+            let client = this.app.apolloProvider.defaultClient;
+            const input = {
+                id: orderId,
+                status: "DELIVERED",
+            };
+            const response = await client.mutate({
+                mutation: updateOrderStatusGql,
+                variables: { input },
+            });
+            const data = response.data.updateOrderStatus;
+            return data;
+
+
+        } catch (error) {
+            console.log('delivered error', error);
+        }
+    },
     async getOrder({ commit }, orderId) {
         try {
             let client = this.app.apolloProvider.defaultClient;

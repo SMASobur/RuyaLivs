@@ -28,7 +28,10 @@
         >
 
         <v-btn
-          v-if="orderData.order.orderStatus === 'PENDING'"
+          v-if="
+            orderData.order.orderStatus != 'DELIVERED' &&
+            orderData.order.orderStatus != 'REJECTED'
+          "
           class="mx-2"
           color="error"
           small
@@ -47,13 +50,38 @@
           >Order Rejected</v-btn
         >
         <v-btn
-          v-if="orderData.order.orderStatus === 'PENDING'"
+          v-if="
+            orderData.order.orderStatus != 'REJECTED' &&
+            orderData.order.orderStatus != 'DELIVERED'
+          "
           class="mx-2"
           color="accent"
           small
           rounded
           @click="shouldOrderUpdateDialog = true"
           >Update Order</v-btn
+        >
+        <v-btn
+          v-if="
+            (orderData.order.orderStatus != 'DELIVERED') &
+            (orderData.order.orderStatus != 'REJECTED')
+          "
+          class="mx-2"
+          color="purple"
+          small
+          rounded
+          dark
+          @click="shouldShowDeliveredDialog = true"
+          >Complete Delivery</v-btn
+        >
+        <v-btn
+          v-if="orderData.order.orderStatus === 'DELIVERED'"
+          class="mx-2"
+          small
+          rounded
+          depressed
+          disabled
+          >Order Delivered</v-btn
         >
       </div>
 
@@ -92,6 +120,16 @@
         @onSuccessUpdateOrderItems="onSuccessUpdateOrderItems"
       />
     </div>
+    <div v-if="orderData">
+      <OrderDeliveredDialog
+        :shouldOpen="shouldShowDeliveredDialog"
+        @onclickClose="onClickCloseAcceptRejectDialog"
+        @onDeliveredRequestStarted="onDeliveredRequestStarted"
+        @onOrderDeliveredCompleted="onOrderDeliveredCompleted"
+        @onDeliveredRequestSuccess="onDeliveredRequestSuccess"
+        :orderId="orderData.order.id"
+      />
+    </div>
   </v-container>
 </template>
 
@@ -102,6 +140,7 @@ import OrderItems from "@/components/orderDetails/OrderItems.vue";
 import OrderAcceptDialog from "@/components/dialogs/OrderAcceptDialog.vue";
 import OrderRejectDialog from "@/components/dialogs/OrderRejectDialog.vue";
 import OrderUpdateDialog from "@/components/orderDetails/OrderUpdateDialog.vue";
+import OrderDeliveredDialog from "@/components/dialogs/OrderDeliveredDialog.vue";
 export default {
   layout: "admin",
   async fetch() {
@@ -116,6 +155,7 @@ export default {
     OrderAcceptDialog,
     OrderRejectDialog,
     OrderUpdateDialog,
+    OrderDeliveredDialog,
   },
 
   data() {
@@ -124,9 +164,11 @@ export default {
       orderData: null,
       acceptInProgress: false,
       rejectInProgress: false,
+      deliveredInProgress: false,
       shouldShowAcceptDialog: false,
       shouldShowRejectDialog: false,
       shouldOrderUpdateDialog: false,
+      shouldShowDeliveredDialog: false,
     };
   },
 
@@ -142,10 +184,24 @@ export default {
         content: data,
         color: "accent",
       });
-      this.orderData.order.orderStatus = "ACCEPTED"
+      this.orderData.order.orderStatus = "ACCEPTED";
     },
     onAcceptRequestCompleted() {
       this.acceptInProgress = false;
+    },
+
+    onDeliveredRequestStarted() {
+      this.deliveredInProgress = true;
+    },
+    onDeliveredRequestSuccess(data) {
+      this.orderData.order.orderStatus = "DELIVERED";
+      this.$notifier.showMessage({
+        content: data,
+        color: "accent",
+      });
+    },
+    onOrderDeliveredCompleted() {
+      this.deliveredInProgress = false;
     },
 
     onRejectRequestStarted() {
@@ -156,7 +212,7 @@ export default {
         content: data,
         color: "accent",
       });
-      this.orderData.order.orderStatus = "REJECTED"
+      this.orderData.order.orderStatus = "REJECTED";
     },
     onRejectRequestCompleted() {
       this.rejectInProgress = false;
@@ -166,6 +222,7 @@ export default {
       // console.log('onClickClose callded');
       this.shouldShowAcceptDialog = false;
       this.shouldShowRejectDialog = false;
+      this.shouldShowDeliveredDialog = false;
     },
     onClickCloseUpdate() {
       this.shouldOrderUpdateDialog = false;
