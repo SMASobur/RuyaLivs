@@ -145,7 +145,7 @@
                   </v-form>
                 </div>
               </v-card>
-              <v-btn :disabled="!isUserInfoValid" color="accent" @click="e1 = 2"
+              <v-btn depressed :disabled="!isUserInfoValid" color="accent" @click="e1 = 2"
                 >Order Completion</v-btn
               >
             </v-stepper-content>
