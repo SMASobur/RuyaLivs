@@ -28,7 +28,7 @@
           <p v-if="hasDiscount" class="error--text my-0 text-decoration-line-through text-truncate">
             SEK {{ originalPrice }}
           </p>
-          <p :class="{ 'mx-2': hasDiscount }" class="warning--text my-0 font-weight-bold text-truncate">
+          <p :class="{ 'mx-2': hasDiscount }" class="success--text my-0 font-weight-bold text-truncate">
             SEK {{ price }}
           </p>
         </div>
