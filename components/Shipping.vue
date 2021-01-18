@@ -17,7 +17,7 @@
         </v-toolbar-items>
       </v-toolbar>
 
-      <v-container fluid>
+      <div>
         <v-stepper v-model="e1">
           <v-stepper-header>
             <v-stepper-step :complete="e1 > 1" step="1"
@@ -33,7 +33,7 @@
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <v-card tile outlined class="mb-2">
+              <v-card flat outlined class="mb-2">
                 <v-card-title
                   >Billing Information (fill the form to continue)</v-card-title
                 >
@@ -406,7 +406,7 @@
             <!--  -->
           </v-stepper-items>
         </v-stepper>
-      </v-container>
+      </div>
     </v-card>
 
     <UserLogin v-model="showLogin" userType="USER" />
