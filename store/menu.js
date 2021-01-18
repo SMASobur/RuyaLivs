@@ -9,7 +9,7 @@ export const state = () => ({
     categories: [],
     menuFilter: {
         pageNo: 1,
-        limit: 12,
+        limit: 18,
         categories: [],
         searchText: ''
     },

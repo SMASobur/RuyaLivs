@@ -156,7 +156,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
+      <v-container >
         <nuxt />
         <SnackBar />
         <UserLogin v-model="showLogin" userType="USER" />

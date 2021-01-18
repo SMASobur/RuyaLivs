@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div>
     <v-row v-if="!$fetchState.pending" class="mt-2">
       <v-col>
         <MenuFilter />
@@ -73,7 +73,7 @@
       :item="selectedItem"
       v-model="isMenuItemClicked"
     />
-  </v-container>
+  </div>
 </template>
 
 <script>
