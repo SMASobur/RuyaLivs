@@ -35,6 +35,7 @@
     <v-row
       v-if="!$fetchState.pending && !isMenuLoading && totalProductPage != 0"
       class="mt-1"
+      :dense="$vuetify.breakpoint.xs"
     >
       <v-col
         cols="6"
