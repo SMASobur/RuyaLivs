@@ -18,17 +18,17 @@
           </div>
         </v-expand-transition>
       </v-img>
-      <p class="text-h6 text-truncate mx-4 mt-2 mb-0">{{ title }}</p>
+      <p class="text-truncate mx-4 mt-2 mb-0 font-weight-bold">{{ title }}</p>
       <v-card-subtitle class="text-truncate mt-0 pt-0">
         {{ category }}</v-card-subtitle
       >
 
       <v-card-text>
         <div class="d-flex">
-          <p v-if="hasDiscount" class="my-0 text-decoration-line-through">
+          <p v-if="hasDiscount" class="error--text my-0 text-decoration-line-through text-truncate">
             SEK {{ originalPrice }}
           </p>
-          <p :class="{ 'mx-2': hasDiscount }" class="my-0 font-weight-bold">
+          <p :class="{ 'mx-2': hasDiscount }" class="warning--text my-0 font-weight-bold text-truncate">
             SEK {{ price }}
           </p>
         </div>

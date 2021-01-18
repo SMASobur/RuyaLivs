@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row v-if="!$fetchState.pending" class="mt-2">
       <v-col>
         <MenuFilter />
