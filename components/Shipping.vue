@@ -32,10 +32,11 @@
           </v-stepper-header>
 
           <v-stepper-items>
-            <!-- personal information starts -->
             <v-stepper-content step="1">
               <v-card tile outlined class="mb-2">
-                <v-card-title>Billing Information (fill the form to continue)</v-card-title>
+                <v-card-title
+                  >Billing Information (fill the form to continue)</v-card-title
+                >
                 <v-card-subtitle v-if="!authUserResponse.success">
                   <v-alert dense border="left" type="warning" class="mt-4"
                     >Missing information, you are not logged in</v-alert
@@ -52,7 +53,7 @@
                 <div class="mx-4">
                   <v-form v-model="isUserInfoValid">
                     <v-row>
-                      <v-col>
+                      <v-col cols="12" md="6" xs="12">
                         <v-text-field
                           dense
                           type="text"
@@ -61,9 +62,7 @@
                           :rules="nameRules"
                           :value="orderUserInfo.name"
                           outlined
-                        ></v-text-field
-                      ></v-col>
-                      <v-col>
+                        ></v-text-field>
                         <v-text-field
                           dense
                           type="text"
@@ -72,12 +71,7 @@
                           label="Mobile No*"
                           :value="orderUserInfo.phoneNo"
                           outlined
-                        ></v-text-field
-                      ></v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col>
+                        ></v-text-field>
                         <v-textarea
                           label="Address Line 1*"
                           placeholder="Address Line 1"
@@ -88,9 +82,7 @@
                           auto-grow
                           outlined
                           clearable
-                        ></v-textarea
-                      ></v-col>
-                      <v-col>
+                        ></v-textarea>
                         <v-textarea
                           label="Address Line 2"
                           placeholder="Address Line 2"
@@ -100,13 +92,8 @@
                           auto-grow
                           outlined
                           clearable
-                        ></v-textarea
-                      ></v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col
-                        ><v-text-field
+                        ></v-textarea>
+                        <v-text-field
                           dense
                           type="email"
                           @input="setOrderUserEmail"
@@ -114,9 +101,18 @@
                           :rules="emailRules"
                           :value="orderUserInfo.email"
                           outlined
-                        ></v-text-field
-                      ></v-col>
-                      <v-col>
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="6" xs="12">
+                        <v-text-field
+                          dense
+                          type="text"
+                          @input="setOrderUserCountry"
+                          label="Country*"
+                          :rules="requiredFieldRule"
+                          :value="orderUserInfo.country"
+                          outlined
+                        ></v-text-field>
                         <v-text-field
                           dense
                           type="text"
@@ -126,21 +122,6 @@
                           :value="orderUserInfo.city"
                           outlined
                         ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col
-                        ><v-text-field
-                          dense
-                          type="text"
-                          @input="setOrderUserCountry"
-                          label="Country*"
-                          :rules="requiredFieldRule"
-                          :value="orderUserInfo.country"
-                          outlined
-                        ></v-text-field
-                      ></v-col>
-                      <v-col>
                         <v-text-field
                           dense
                           type="text"
@@ -150,11 +131,7 @@
                           :value="orderUserInfo.postalCode"
                           outlined
                         ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col md="6"
-                        ><v-text-field
+                        <v-text-field
                           dense
                           type="text"
                           @input="setOrderUserOrganizationNo"
@@ -162,8 +139,8 @@
                           :rules="requiredFieldRule"
                           :value="orderUserInfo.organizationNo"
                           outlined
-                        ></v-text-field
-                      ></v-col>
+                        ></v-text-field>
+                      </v-col>
                     </v-row>
                   </v-form>
                 </div>
@@ -244,7 +221,6 @@
                 <v-card-title>Billing Information</v-card-title>
                 <v-row>
                   <v-col>
-                    <!-- <v-subheader>Delivery details</v-subheader> -->
                     <v-list>
                       <v-list-item>
                         <v-list-item-content>
@@ -550,7 +526,7 @@ export default {
       "setOrderUserOrganizationNo",
       "clearOrderNote",
       "resetOrderType",
-      "resetOrderAddress"
+      "resetOrderAddress",
     ]),
 
     resetOrder() {

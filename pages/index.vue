@@ -1,9 +1,9 @@
 <template>
-<div>
-    <HomeIntroOne/>
-    <HomeColumn/>
-   <HomeSlideProduct/>
-</div>
+  <div>
+    <HomeIntroOne />
+    <HomeColumn />
+    <HomeSlideProduct />
+  </div>
 </template>
 
 <script>
