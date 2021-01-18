@@ -1,54 +1,40 @@
 <template>
-  <v-card hover class="mx-auto" height="100%" tile>
-    <v-img
-      v-if="thumbnail"
-      @click="onDetailsClicked"
-      max-height="200"
-      contain
-      class="green lighten-4"
-      :src="thumbnail"
-      :lazy-src="thumbnail"
-    ></v-img>
-    <v-card-title
-      v-if="title"
-      @click="onDetailsClicked"
-      class="text-truncate"
-      >{{ title }}</v-card-title
-    >
-    <v-card-text @click="onDetailsClicked" class="text--primary">
-      <div class="subtitle-1">
-        <v-chip small color="primary">{{ category }}</v-chip>
-      </div>
-      <div class="subtitle-1 my-1">Price {{ price }}</div>
-      <div class="text-truncate">{{ description }}</div>
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-    <v-card-actions>
-      <v-btn
-        @click="onDetailsClicked"
-        color="primary"
-        small
-        outlined
-        >Add to Cart</v-btn
+  <v-hover v-slot="{ hover }">
+    <v-card @click="onDetailsClicked" hover class="mx-auto" height="100%" tile>
+      <v-img
+        height="150"
+        contain
+        class="green lighten-4"
+        :src="thumbnail"
+        :lazy-src="thumbnail"
       >
-      <!-- <v-btn
-        v-if="isAddedToCart"
-        @click="
-          removeItemFromCart(id);
-          toggleItemAddedToCart(id);
-        "
-        color="accent"
-        small
-        outlined
-        >Remove
-      </v-btn> -->
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out primary darken-4 v-card--reveal"
+            style="height: 100%"
+          >
+            <v-btn small rounded outlined dark> View Details </v-btn>
+          </div>
+        </v-expand-transition>
+      </v-img>
+      <p class="text-h6 text-truncate mx-4 mt-2 mb-0">{{ title }}</p>
+      <v-card-subtitle class="text-truncate mt-0 pt-0">
+        {{ category }}</v-card-subtitle
+      >
 
-      <!-- <v-btn color="accent" small outlined @click="onDetailsClicked"
-        >Details</v-btn
-      > -->
-    </v-card-actions>
-  </v-card>
+      <v-card-text>
+        <div class="d-flex">
+          <p v-if="hasDiscount" class="my-0 text-decoration-line-through">
+            SEK {{ originalPrice }}
+          </p>
+          <p :class="{ 'mx-2': hasDiscount }" class="my-0 font-weight-bold">
+            SEK {{ price }}
+          </p>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-hover>
 </template>
 
 <script>
@@ -73,6 +59,10 @@ export default {
     },
     price: {
       type: String,
+      required: true,
+    },
+    originalPrice: {
+      type: String | Number,
       required: true,
     },
     description: {
@@ -110,14 +100,21 @@ export default {
       "removeItemFromCart",
     ]),
   },
+  computed: {
+    hasDiscount() {
+      return this.originalPrice != this.price;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.fix {
-  overflow-wrap: anywhere;
-  word-wrap: break-word;
-  word-break: normal;
-  hyphens: auto;
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.8;
+  position: absolute;
+  width: 100%;
 }
 </style>

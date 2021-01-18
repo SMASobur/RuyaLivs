@@ -37,9 +37,10 @@
       class="mt-1"
     >
       <v-col
-        cols="12"
-        sm="6"
-        md="3"
+        cols="6"
+        sm="3"
+        xs="6"
+        md="2"
         v-for="(item, index) in allMenu"
         :key="index"
       >
@@ -50,12 +51,12 @@
             :thumbnail="item.thumbnail"
             :category="item.category.name"
             :price="item.netPrice.toString()"
+            :originalPrice="item.price"
             :description="item.description"
             :isAddedToCart="item.isAddedToCart"
             :sizeAndPrice="item.sizeAndPrice"
             @onDetailsClicked="onMenuItemClick(item)"
           />
-
         </div>
       </v-col>
     </v-row>
@@ -82,10 +83,16 @@ import gql from "graphql-tag";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
+  async fetch() {
+    await this.fetchMenus();
+  },
   components: {
     ProductCard,
     MenuFilter,
     ProductDetails,
+  },
+  created() {
+    this.setPageNo(1);
   },
   data() {
     return {
@@ -95,9 +102,7 @@ export default {
       selectedItem: null,
     };
   },
-  async fetch() {
-    await this.fetchMenus();
-  },
+
   methods: {
     ...mapActions("reservation", ["deActivateReservationWithPreOrder"]),
     ...mapActions("menu", ["fetchMenus", "setPageNo"]),
@@ -139,9 +144,7 @@ export default {
     },
   },
   watch: {
-    $route(to, from) {
-      console.log("hello");
-    },
+    $route(to, from) {},
   },
 
   // middleware: ['isAuth']
