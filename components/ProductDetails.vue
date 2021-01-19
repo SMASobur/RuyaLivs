@@ -3,16 +3,51 @@
     <v-bottom-sheet v-model="sheet" inset scrollable persistent>
       <v-card>
         <!-- <p>{{ selectedSize }}</p> -->
-        <div class="d-flex justify-space-between">
-          <v-btn class="mt-4" text color="red" @click="sheet = !sheet"
+        <div class="d-flex justify-end">
+          <v-btn class="mt-4 mr-2" text color="red" @click="sheet = !sheet"
             >close</v-btn
           >
         </div>
         <v-card-text>
           <v-sheet scrollable>
             <v-row>
-              <v-col class="d-flex flex-column align-center">
-                <v-img :src="item.thumbnail" contain max-width="200px"></v-img>
+              <v-col style="width:200px" class="d-flex flex-column my-auto align-center">
+                <!-- <v-img
+                  :src="defaultThumbnail"
+                  :lazy-src="defaultThumbnail"
+                  contain
+                  transition
+                  class="green lighten-4 zoom"
+                  width="200px"
+                ></v-img> -->
+
+                <div style="width: 200px">
+                  <zoom-on-hover :img-normal="defaultThumbnail"></zoom-on-hover>
+                </div>
+
+                <v-row class="d-flex justify-center my-auto">
+                  <v-col
+                    v-for="thumbnail in item.thumbnail"
+                    :key="thumbnail"
+                    cols="3"
+                    md="3"
+                    xs="3"
+                  >
+                    <v-hover v-slot="{ hover }">
+                      <v-card
+                        :elevation="hover ? 16 : 2"
+                        @click="onClickOtherImages(thumbnail)"
+                      >
+                        <v-img
+                          class="rounded-lg green lighten-4"
+                          v-if="thumbnail"
+                          :src="thumbnail"
+                          contain
+                        ></v-img>
+                      </v-card>
+                    </v-hover>
+                  </v-col>
+                </v-row>
 
                 <div v-if="item.hasMultipleSize">
                   <v-btn
@@ -165,10 +200,12 @@ export default {
     this.selectedSize = this.item.sizeAndPrice.find(
       (it) => it.isDefault === true
     );
+    this.defaultThumbnail = this.item.thumbnail[0];
   },
   data() {
     return {
       selectedSize: null,
+      defaultThumbnail: "",
     };
   },
   mounted() {},
@@ -248,6 +285,9 @@ export default {
         this.toggleItemAddedToCart(payload);
       }
     },
+    onClickOtherImages(val) {
+      this.defaultThumbnail = val;
+    },
   },
   computed: {
     ...mapGetters("menu", ["cartItems", "getSelectedItemSelectedSize"]),
@@ -274,4 +314,9 @@ export default {
 </script>
 
 <style>
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5);
+}
 </style>

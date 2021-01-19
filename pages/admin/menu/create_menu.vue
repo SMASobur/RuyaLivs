@@ -19,7 +19,7 @@ export default {
       product: {
         category: "",
         productName: "",
-        thumbnail: "",
+        thumbnail: [],
         description: "",
         price: 0,
         offer: 0,

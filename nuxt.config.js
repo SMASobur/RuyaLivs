@@ -35,6 +35,7 @@ export default {
     '~/plugins/notifier.js',
     '~/plugins/apollo-error-handler.js',
     '~/plugins/apollo-watch-loading-handler.js',
+    '~/plugins/zoom-on-hover.js',
     // { src: '~/plugins/mask-input.client.js' },
     { src: '~/plugins/v-stripe-elements.js', mode: 'client' },
     { src: '~/plugins/vuex-persist', ssr: false },
@@ -103,8 +104,8 @@ export default {
     clientConfigs: {
       default: {
         // required
-        // httpEndpoint: 'http://localhost:4000/graphql',
-        httpEndpoint: 'https://nawras-server.herokuapp.com/graphql',
+        httpEndpoint: 'http://localhost:4000/graphql',
+        // httpEndpoint: 'https://nawras-server.herokuapp.com/graphql',
         // optional
         // override HTTP endpoint in browser only
         // browserHttpEndpoint: '/graphql',

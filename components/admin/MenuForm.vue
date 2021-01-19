@@ -37,16 +37,24 @@
                   label="Thumbnail"
                   :loading="imageUpload"
                   @change="handleFileUpload"
-                  @click:clear="onRemovePhoto"
                 ></v-file-input>
               </v-col>
               <v-col cols="12" md="6">
-                <v-img
-                  v-if="product.thumbnail"
-                  height="200"
-                  :src="product.thumbnail"
-                  contain
-                ></v-img>
+                <v-row>
+                  <v-col
+                    v-for="thumbnail in product.thumbnail"
+                    :key="thumbnail"
+                    cols="12"
+                    md="3"
+                  >
+                    <div class="d-flex flex-column">
+                      <v-img v-if="thumbnail" :src="thumbnail" contain></v-img>
+                      <v-icon small @click="onClickDeleteThumbnail(thumbnail)"
+                        >mdi-delete</v-icon
+                      >
+                    </div>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
 
@@ -164,16 +172,6 @@ export default {
       isFormValid: false,
       imageUpload: false,
       addingProduct: false,
-      productData: {
-        category: "",
-        productName: "",
-        thumbnail: "",
-        description: "",
-        price: 0,
-        offer: 0,
-        isAvailable: false,
-        sizeAndPrice: [],
-      },
       fieldMandatoryRules: [(v) => !!v || "Name is required"],
       isProductFormValid: false,
       hasMultipleSize: false,
@@ -198,7 +196,7 @@ export default {
       const data = response.data.uploadFile;
       console.log("file upload data", data);
       if (data.success) {
-        this.product.thumbnail = data.url;
+        this.product.thumbnail.push(data.url);
         this.$notifier.showMessage({
           content: data.message,
           color: "success",
@@ -309,7 +307,7 @@ export default {
           });
         }
         // this.$refs.productForm.reset();
-        this.product.thumbnail = "";
+        this.product.thumbnail = [];
       } catch (error) {
         this.$notifier.showMessage({
           content: error.message,
@@ -318,8 +316,15 @@ export default {
         this.addingProduct = false;
       }
     },
-    onRemovePhoto() {
-      this.product.thumbnail = "";
+    // onRemovePhoto() {
+    //   this.product.thumbnail = "";
+    // },
+    onClickDeleteThumbnail(val) {
+      const thumbnailIndex = this.product.thumbnail.findIndex(
+        (th) => th === val
+      );
+      console.log("thumbnailIndex", thumbnailIndex);
+      this.product.thumbnail.splice(thumbnailIndex, 1);
     },
     onSaveEditedItem(item) {
       this.$emit("onSaveEditedItem", item);
