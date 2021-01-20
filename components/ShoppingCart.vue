@@ -5,7 +5,7 @@
         <v-divider inset :key="index + '-first'"></v-divider>
         <v-list-item :key="index">
           <v-list-item-avatar class="d-none d-sm-block">
-            <v-img :src="item.thumbnail"></v-img>
+            <v-img :src="item.thumbnail[0]" :lazy-src="item.thumbnail[0]"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title

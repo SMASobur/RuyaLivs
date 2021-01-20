@@ -50,7 +50,7 @@
             class="mt-3 d-flex flex-column justify-center align-center"
           >
             <h2 class="headline font-weight-bold success--text">
-              PREPARING FOOD !
+              PREPARING ORDER !
             </h2>
             <v-img
               class="ml-2"
@@ -63,7 +63,7 @@
             class="mt-3 d-flex flex-column justify-center align-center"
           >
             <h2 class="headline font-weight-bold success--text">
-              FOOD READY !
+              ORDER READY !
             </h2>
             <v-img
               class="ml-2"
