@@ -40,7 +40,6 @@
                       >
                         <v-img
                           class="rounded-lg green lighten-4"
-                          v-if="thumbnail"
                           :src="thumbnail"
                           contain
                         ></v-img>

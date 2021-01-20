@@ -44,8 +44,10 @@
                   <v-col
                     v-for="thumbnail in product.thumbnail"
                     :key="thumbnail"
-                    cols="12"
+                    cols="6"
                     md="3"
+                    sm="3"
+                    xs="3"
                   >
                     <div class="d-flex flex-column">
                       <v-img v-if="thumbnail" :src="thumbnail" contain></v-img>
@@ -253,13 +255,14 @@ export default {
             content: data.message,
             color: "success",
           });
+          this.$refs.productForm.reset();
+          this.product.thumbnail = [];
         } else {
           this.$notifier.showMessage({
             content: data.message,
             color: "error",
           });
         }
-        this.$refs.productForm.reset();
       } catch (error) {
         this.$notifier.showMessage({
           content: error.message,
