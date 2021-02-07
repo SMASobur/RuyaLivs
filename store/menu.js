@@ -95,6 +95,15 @@ export const mutations = {
         //         product.isAddedToCart = true;
         //     }
         // })
+    },
+
+    RESET_FILTER(state) {
+        state.menuFilter = {
+            pageNo: 1,
+            limit: 18,
+            categories: [],
+            searchText: ''
+        }
     }
 
 }
@@ -198,6 +207,9 @@ export const actions = {
     },
     resetCart({ commit }) {
         commit('RESET_CART');
+    },
+    resetFilter({ commit }) {
+        commit('RESET_FILTER');
     },
     setPageNo({ commit }, pageNo) {
         commit('SET_PAGE_NO', pageNo);

@@ -80,7 +80,6 @@
 import ProductCard from "@/components/ProductCard.vue";
 import MenuFilter from "@/components/MenuFilter.vue";
 import ProductDetails from "@/components/ProductDetails.vue";
-import gql from "graphql-tag";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
@@ -93,7 +92,7 @@ export default {
     ProductDetails,
   },
   created() {
-    this.setPageNo(1);
+    this.resetFilter();
   },
   data() {
     return {
@@ -106,7 +105,7 @@ export default {
 
   methods: {
     ...mapActions("reservation", ["deActivateReservationWithPreOrder"]),
-    ...mapActions("menu", ["fetchMenus", "setPageNo"]),
+    ...mapActions("menu", ["fetchMenus", "setPageNo","resetFilter"]),
     onPreOrderChange(val) {
       if (!val) {
         this.deActivateReservationWithPreOrder();

@@ -12,7 +12,7 @@
             <img src="/img/users/icon_user.png" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{ authUser.fullName }}</v-list-item-title>
+            <v-list-item-title>{{ authUser.firstName }} {{ authUser.lastName }}</v-list-item-title>
             <v-list-item-subtitle>User</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -103,37 +103,29 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
 
-      <!-- tab starts -->
-      <!-- <v-tabs right >
-          <v-tab to="/" nuxt>Home page</v-tab>
-          <v-tab to="/menu" nuxt>Menu</v-tab>
-          <v-tab to="/reservation" nuxt>Reservation</v-tab>
-          <v-tab to="/order" nuxt>My Order</v-tab>
-      </v-tabs>-->
-      <!-- tab ends -->
-
       <div class="d-none d-md-block">
         <v-btn text to="/">Home</v-btn>
         <v-btn text to="/shop">Shop</v-btn>
-        <v-btn text to="/order">My Order</v-btn>
+        <v-btn
+          text
+          to="/order"
+          v-if="
+            authUserResponse.success && authUser && authUser.userType == 'USER'
+          "
+          >My Order</v-btn
+        >
         <!-- <v-btn text to="/reservation">Reservation</v-btn>  -->
       </div>
 
-      <!-- user icon starts -->
-      <!-- <v-btn v-if="authUserResponse.success" icon>
-        <v-avatar size="35">
-          <v-img src="/img/users/icon_user.png"></v-img>
-        </v-avatar>
-      </v-btn> -->
-      <!-- user icon ends -->
+      <v-divider vertical class="mx-4 d-none d-md-block" />
 
       <!-- login button starts -->
       <v-btn
         outlined
+        rounded
         v-if="authUser.userType != 'USER'"
         text
         @click="showLogin = true"
-        class="ml-2"
       >
         <v-icon left>mdi-account</v-icon>Login
       </v-btn>
@@ -156,7 +148,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container >
+      <v-container>
         <nuxt />
         <SnackBar />
         <UserLogin v-model="showLogin" userType="USER" />
@@ -172,7 +164,12 @@
         <span>Shop</span>
         <v-icon>mdi-cart</v-icon>
       </v-btn>
-      <v-btn to="/order">
+      <v-btn
+        to="/order"
+        v-if="
+          authUserResponse.success && authUser && authUser.userType == 'USER'
+        "
+      >
         <span>My Order</span>
         <v-icon>mdi-shopping</v-icon>
       </v-btn>
