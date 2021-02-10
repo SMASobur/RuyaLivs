@@ -12,7 +12,10 @@
             <img src="/img/users/icon_user.png" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{ authUser.firstName }} {{ authUser.lastName }}</v-list-item-title>
+            <v-list-item-title
+              >{{ authUser.firstName }}
+              {{ authUser.lastName }}</v-list-item-title
+            >
             <v-list-item-subtitle>User</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -39,13 +42,10 @@
       <template v-slot:append>
         <div class="pa-2">
           <v-btn
-            v-if="
-              authUserResponse.success &&
-              authUser &&
-              authUser.userType == 'USER'
-            "
+            v-if="authUserResponse.success && authUser"
+            outlined
             block
-            color="accent"
+            color="error"
             @click="onLogout"
             >Logout</v-btn
           >

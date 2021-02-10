@@ -3,6 +3,7 @@ query getOrderByUserId($orderInput: GetOrderByUserIdInput!) {
     code
     success
     message
+    count
     orders{
       id
       createdAt

@@ -1,11 +1,11 @@
 <template>
-  <v-container>
+  <div>
     <div class="d-flex justify-center">
       <v-progress-circular
         color="accent"
         indeterminate
-        v-if="$fetchState.pending && isFirstView"
-        class="align-self-center"
+        v-if="$fetchState.pending"
+        class="align-self-center mt-4"
       ></v-progress-circular>
     </div>
 
@@ -13,7 +13,7 @@
       <p>You have not placed any order yet ! Go to menu and place an order now.</p>
       <v-btn tile to="/menu" color="accent">Menu</v-btn>
     </div>-->
-    <div v-if="orders.length == 0">
+    <div v-if="!$fetchState.pending && orders.length == 0">
       <p>
         You have not placed any order yet ! Go to menu and place an order now.
       </p>
@@ -21,7 +21,7 @@
     </div>
 
     <!-- <div v-else-if="orders.length !== 0 && !$fetchState.pending"> -->
-    <div v-else-if="orders.length !== 0">
+    <div v-else-if="orders.length !== 0 && !$fetchState.pending">
       <!-- <h3>My Orders</h3> -->
       <v-list v-for="(order, index) in orders" :key="index">
         <h4>Order #{{ index + 1 }}</h4>
@@ -162,7 +162,6 @@
             </v-list-item>-->
           </v-card-text>
           <v-list-item>
-
             <v-expansion-panels accordion focusable class="mb-4">
               <v-expansion-panel>
                 <v-expansion-panel-header>Order items</v-expansion-panel-header>
@@ -219,7 +218,14 @@
         </v-card>
       </v-list>
     </div>
-  </v-container>
+    <v-pagination
+      v-if="!$fetchState.pending && totalOrderPage > 1"
+      v-model="orderInput.pageNo"
+      class="my-4"
+      :length="totalOrderPage"
+      @input="onPaginationInput"
+    ></v-pagination>
+  </div>
 </template>
 
 <script>
@@ -238,11 +244,12 @@ export default {
       // orders: null,
       getOrderByUserId: null,
       orderInput: {
-        // userId: this.authUser.userId,
-        userId: "5ea178359ab6e429f8bde668",
         orderStatus: [],
-        isFirstView: true,
+        orderType: ["DELIVERY", "COLLECTION"],
+        limit: 10,
+        pageNo: 1,
       },
+      isFirstView: true,
       interval: null,
       fetchInterval: 60000,
     };
@@ -250,9 +257,9 @@ export default {
   async fetch() {
     const userId = this.$cookies.get("user-id");
     console.log("cookier user", userId);
-    await this.fetchOrderByUserId(userId);
+    this.orderInput.userId = userId
+    await this.fetchOrderByUserId(this.orderInput);
     this.isFirstView = false;
-    console.log("cookier user after", userId);
   },
   methods: {
     ...mapActions("my_order", ["fetchOrderByUserId"]),
@@ -268,6 +275,11 @@ export default {
     stopUpdateOrder() {
       clearInterval(this.interval);
     },
+    onPaginationInput(val){
+      this.orderInput.pageNo = val
+      this.$fetch();
+      // window.scrollTo(0, 0);
+    }
   },
   mounted() {
     this.updateOrder();
@@ -277,7 +289,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["authUser", "authUserResponse"]),
-    ...mapGetters("my_order", ["orders"]),
+    ...mapGetters("my_order", ["orders","totalOrderPage"]),
     // orders() {
     //   return this.getOrderByUserId.orders;
     // }

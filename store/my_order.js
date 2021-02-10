@@ -2,25 +2,24 @@
 import getOrdersByUserIdQuery from "../gql/query/getOrdersByUserId.gql";
 
 export const state = () => ({
-    orders: []
+    orders: [],
+    totalOrderCount: 0
+
 })
 
 
 export const mutations = {
     SET_ORDERS(state, orders) {
         state.orders = orders;
+    },
+    SET_ORDER_COUNT(state, count) {
+        state.totalOrderCount = count
     }
 }
 
 export const actions = {
-    async fetchOrderByUserId({ commit }, userId) {
+    async fetchOrderByUserId({ commit }, orderInput) {
         let client = this.app.apolloProvider.defaultClient;
-        const orderInput = {
-            userId: userId,
-            // userId: "5ea178359ab6e429f8bde668",
-            orderStatus: [],
-            orderType: ["DELIVERY", "COLLECTION"]
-        };
         const response = await client.query({
             query: getOrdersByUserIdQuery,
             variables: { orderInput },
@@ -28,12 +27,22 @@ export const actions = {
         });
         console.log("getOrderResponse", response);
         const orders = response.data.getOrderByUserId.orders;
+        const orderCount = response.data.getOrderByUserId.count;
         commit('SET_ORDERS', orders);
+        commit('SET_ORDER_COUNT', orderCount)
     }
+
 }
 
 export const getters = {
     orders(state) {
         return state.orders;
+    },
+    totalOrderPage(state) {
+        const limit = 10;
+        const totalOrderCount = state.totalOrderCount;
+        console.log('totalOrderCount',totalOrderCount);
+        return Math.ceil(totalOrderCount / limit);
+
     }
 }

@@ -18,11 +18,10 @@
     </v-row>
     <div class="d-flex justify-center mr-2">
       <v-progress-circular
-        :size="50"
         color="accent"
         indeterminate
         v-if="$fetchState.pending || isMenuLoading"
-        class="align-self-center"
+        class="align-self-center mt-4"
       ></v-progress-circular>
     </div>
     <v-row

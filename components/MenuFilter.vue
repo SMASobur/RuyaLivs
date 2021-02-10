@@ -51,7 +51,7 @@ import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
-      values: "",
+      values: "All",
     };
   },
   async fetch() {
@@ -66,8 +66,10 @@ export default {
     },
     onMenuFilterChange(val) {
       console.log("menu filter val", this.values);
-      if (!val || val === "All") this.setMenuCategories([]);
-      else this.setMenuCategories(val);
+      if (!val || val === "All") {
+        this.values = "All"
+        this.setMenuCategories([]);
+      } else this.setMenuCategories(val);
       this.setPageNo(1);
       this.fetchMenus();
     },
@@ -86,7 +88,7 @@ export default {
       const categories = this.remoteCategories.map((category) => {
         return category.name;
       });
-      categories.push("All");
+      categories.unshift("All");
       return categories;
     },
   },
