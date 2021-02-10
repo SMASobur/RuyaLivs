@@ -29,7 +29,7 @@
       v-if="!$fetchState.pending && !isMenuLoading && totalProductPage == 0"
     >
       <v-col>
-        <p>Sorry, no product is found with this catagory :(</p>
+        <p class="mt-4">Sorry, no product is found with this catagory :(</p>
       </v-col>
     </v-row>
     <v-row
@@ -45,20 +45,18 @@
         v-for="(item, index) in allMenu"
         :key="index"
       >
-        <div>
-          <ProductCard
-            :id="item.id"
-            :title="item.productName"
-            :thumbnail="item.thumbnail"
-            :category="item.category.name"
-            :price="item.netPrice.toString()"
-            :originalPrice="item.price"
-            :description="item.description"
-            :isAddedToCart="item.isAddedToCart"
-            :sizeAndPrice="item.sizeAndPrice"
-            @onDetailsClicked="onMenuItemClick(item)"
-          />
-        </div>
+        <ProductCard
+          :id="item.id"
+          :title="item.productName"
+          :thumbnail="item.thumbnail"
+          :category="item.category.name"
+          :price="item.netPrice.toString()"
+          :originalPrice="item.price"
+          :description="item.description"
+          :isAddedToCart="item.isAddedToCart"
+          :sizeAndPrice="item.sizeAndPrice"
+          @onDetailsClicked="onMenuItemClick(item)"
+        />
       </v-col>
     </v-row>
     <v-pagination
@@ -105,7 +103,7 @@ export default {
 
   methods: {
     ...mapActions("reservation", ["deActivateReservationWithPreOrder"]),
-    ...mapActions("menu", ["fetchMenus", "setPageNo","resetFilter"]),
+    ...mapActions("menu", ["fetchMenus", "setPageNo", "resetFilter"]),
     onPreOrderChange(val) {
       if (!val) {
         this.deActivateReservationWithPreOrder();

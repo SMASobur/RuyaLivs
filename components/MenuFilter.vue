@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" md="6" sm="12" class="my-0 py-0">
+    <v-col cols="12" md="6" sm="12" class="py-0">
       <v-text-field
         placeholder="e.g. Burger, Indian Parata..."
         dense
@@ -8,10 +8,16 @@
         outlined
         prepend-inner-icon="mdi-magnify"
         @input="onMenuSearch"
+        hide-details
       ></v-text-field>
     </v-col>
-    <v-col cols="12" md="6" sm="12" class="my-0 py-0">
-      <v-autocomplete
+    <v-col
+      cols="12"
+      md="6"
+      sm="12"
+      :class="{ 'my-0 pt-0': !$vuetify.breakpoint.xs }"
+    >
+      <!-- <v-autocomplete
         v-model="values"
         :items="categoryNames"
         outlined
@@ -22,7 +28,20 @@
         multiple
         rounded
         @change="onMenuFilterChange"
-      ></v-autocomplete>
+      ></v-autocomplete> -->
+      <v-chip-group
+        v-model="values"
+        active-class="accent"
+        @change="onMenuFilterChange"
+      >
+        <v-chip
+          v-for="category in categoryNames"
+          :key="category"
+          :value="category"
+        >
+          {{ category }}
+        </v-chip>
+      </v-chip-group>
     </v-col>
   </v-row>
 </template>
@@ -32,7 +51,7 @@ import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
-      values: []
+      values: "",
     };
   },
   async fetch() {
@@ -46,8 +65,9 @@ export default {
       this.fetchMenus();
     },
     onMenuFilterChange(val) {
-      console.log("menu filter val", val);
-      this.setMenuCategories(val);
+      console.log("menu filter val", this.values);
+      if (!val || val === "All") this.setMenuCategories([]);
+      else this.setMenuCategories(val);
       this.setPageNo(1);
       this.fetchMenus();
     },
@@ -57,17 +77,19 @@ export default {
       "setMenuCategories",
       "setMenuSearchText",
       "fetchMenus",
-      "setPageNo"
-    ])
+      "setPageNo",
+    ]),
   },
   computed: {
     ...mapGetters("menu", ["remoteCategories"]),
     categoryNames() {
-      return this.remoteCategories.map(category => {
+      const categories = this.remoteCategories.map((category) => {
         return category.name;
       });
-    }
-  }
+      categories.push("All");
+      return categories;
+    },
+  },
 };
 </script>
 

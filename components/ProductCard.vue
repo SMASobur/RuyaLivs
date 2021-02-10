@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card @click="onDetailsClicked" hover class="mx-auto" height="100%" tile>
+    <v-card @click="onDetailsClicked" hover height="100%" tile>
       <v-img
         height="150"
         contain
@@ -19,8 +19,8 @@
         </v-expand-transition>
       </v-img>
       <p class="text-truncate mx-4 mt-2 mb-0 font-weight-bold">{{ title }}</p>
-      <v-card-subtitle class="text-truncate mt-0 pt-0">
-        {{ category }}</v-card-subtitle
+      <v-card-subtitle class=" mt-0 pt-0">
+        {{ description }}</v-card-subtitle
       >
 
       <v-card-text>
