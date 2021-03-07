@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <HomeIntroOne />
     <HomeColumn />
     <HomeSlideProduct />

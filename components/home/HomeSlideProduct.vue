@@ -52,7 +52,7 @@
     <v-img
     contain
 
-      src="https://firebasestorage.googleapis.com/v0/b/image-server-65bbd.appspot.com/o/restaurant%2Fimage_1609620325390.png?alt=media&amp;token=0e18dc48-ed57-468d-89bb-9625efa31da3&quot"
+      src="img/olivesalad.png"
       height="100"
     >
              <v-btn

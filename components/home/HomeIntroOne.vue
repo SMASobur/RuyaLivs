@@ -22,10 +22,11 @@
             <v-card-actions>
                      <h3 class="font-weight-light mx-1">{{card.subtitle}}</h3>
 
-      <v-btn
+        <v-btn
+      rounded
       v-if="card.link"
         class="ma-2"
-        color="primary"
+        color="primary "
         dark
         :to=card.link
       >
@@ -34,7 +35,7 @@
           dark
           right
         >
-         mdi-arrow-right-bold-box-outline
+         mdi-hand-pointing-right 
         </v-icon>
       </v-btn>
             </v-card-actions>
@@ -49,7 +50,9 @@ export default {
   components: { HomeSlideProduct },
     data: () => ({
       cards: [
-        { title: 'Try Our Online Order System and you will never go back', subtitle: 'we are here to serve you best with afortable price. we are here to serve you best with afortable price.we are here to serve you best with afortable price',src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 12 , button_text:'go to shop',},
+        { subtitle: 
+        'Our short-term goal is to be able to deliver a complete solution of dry goods consisting of 580-600 items under many different brands (Nawras, Sefer, Peros, Fairy, Yurttan, Papilion, ABC) that will be able to meet the need for a versatile range in the oriental stores.'
+        ,src: 'img/intro.png', flex: 12 , button_text:'go to shop', link:'/shop'},
 
 
 
@@ -87,13 +90,6 @@ export default {
 
   .txtgb{
   text-shadow:0px 0px 10px white;
-  color:white;
-
-}
-
-  .txtgb:hover {
-  font-size: 25px;
-  text-shadow:0px 0px 20px rgb(218, 253, 92);
   color:white;
 
 }
