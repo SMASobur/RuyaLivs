@@ -6,13 +6,14 @@
         sm="6"
         md="6"
       >
-    <v-card class="ma-2" elevation="2" shaped>
+    <v-card class="ma-2" elevation="2">
             
             <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/road.jpg"
+              src="img/Logoround1.png"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="300px"
+              height="550px"
+              width="570px"
               
             >
             <v-card-title  class="txtgb">Sales and Offers</v-card-title>
@@ -27,13 +28,14 @@
         sm="6"
         md="6"
       >
-          <v-card class="ma-2" elevation="2" shaped>
+          <v-card class="ma-2" elevation="2">
             
             <v-img
               src="https://cdn.vuetifyjs.com/images/cards/plane.jpg"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="300px"
+              height="550px"
+              width="570px"
               
             >
             <v-card-title  class="txtgb">Sales and Offers</v-card-title>
