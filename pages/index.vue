@@ -2,8 +2,10 @@
   <div>
     
     <HomeIntroOne />
-    <HomeColumn />
     <HomeSlideProduct />
+    <sales/>
+    <HomeColumn />
+    
   </div>
 </template>
 
@@ -12,8 +14,9 @@ import HomeIntro from "@/components/home/HomeIntro.vue";
 import HomeIntroOne from "@/components/home/HomeIntroOne.vue";
 import HomeColumn from "@/components/home/HomeColumn.vue";
 import HomeSlideProduct from "@/components/home/HomeSlideProduct.vue";
+import Sales from '~/components/home/sales.vue';
 export default {
-  components: { HomeIntro, HomeIntroOne, HomeColumn, HomeSlideProduct },
+  components: { HomeIntro, HomeIntroOne, HomeColumn, HomeSlideProduct, Sales },
   data() {
     return {};
   },

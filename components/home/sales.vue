@@ -1,9 +1,9 @@
 <template>
-<v-card>
+<v-card shaped>
   <v-row no-gutters>
       <v-col
       >
-     <h3 class="mt-5 ml-5">Our Best Sales</h3>
+     <h3 class="mt-5 ml-5">Current Discount</h3>
       </v-col>
 
       <v-col
@@ -31,7 +31,7 @@
 
 <v-card   elevation="5" rounded >
     <v-sheet
-    class="mx-auto ma-1 "
+    class="mx-auto ma-1"
   >
     <v-slide-group
       v-model="model"
@@ -100,10 +100,5 @@
 <style>
 .bgcolor{
   background-color: white;
-  
-}
-.vertical {
- overflow-y: auto;;
-  
 }
 </style>
