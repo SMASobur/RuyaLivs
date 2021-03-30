@@ -55,6 +55,7 @@
            <v-btn
       class="mb-2"
       fab
+      @click.stop="say('Added to Cart')"
       small
       absolute
       bottom
@@ -115,6 +116,9 @@ export default {
     console.log("title", this.title);
   },
   methods: {
+         say(message) {
+      alert(message)
+    },
     addItemToCart(productId) {
       this.addItemToCart(productId);
     },
@@ -133,6 +137,7 @@ export default {
       "toggleItemAddedToCart",
       "removeItemFromCart",
     ]),
+ 
   },
   computed: {
     hasDiscount() {
