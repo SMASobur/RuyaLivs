@@ -176,6 +176,10 @@ export default {
 } 
 .vertical {
  overflow-y: auto;
+ scroll-behavior: smooth;
+}
+html {
+  scroll-behavior: smooth;
 }
   
 </style>
