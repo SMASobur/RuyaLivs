@@ -1,35 +1,12 @@
 <template>
-<v-card shaped>
+<v-card outlined shaped>
   <v-row no-gutters>
-      <v-col
-      >
-     <h3 class="mt-5 ml-5">Our New Products</h3>
-      </v-col>
-
-      <v-col
-      >
-         <div class="text-right">
-  <v-btn
-  rounded
-      color="primary"
-      class="ma-2 white--text"
-    >
-      View All
-        <v-icon
-          dark
-          right
-        >
-         mdi-hand-pointing-right
-        </v-icon>
-    </v-btn>
-    </div>
-      </v-col>
-
+    <h3 class="mt-5 ml-5"><v-icon large color="orange darken-2 ">mdi-new-box</v-icon>Products</h3>
     </v-row>
 
 
 
-<v-card   elevation="5" rounded >
+<v-card   elevation="5" >
     <v-sheet
     class="mx-auto ma-1"
   >
@@ -67,7 +44,7 @@
             class="d-flex transition-fast-in-fast-out primary darken-4 v-card--reveal"
             style="height: 100%"
           >
-            <v-btn small rounded outlined dark> View Details </v-btn>
+            <v-btn small outlined dark> View Details </v-btn>
           </div>
         </v-expand-transition>
 
@@ -136,6 +113,24 @@
       </v-slide-item>
     </v-slide-group>
   </v-sheet>
+  <v-divider></v-divider>
+<div class="text-right">
+  <small class="primary--text"><v-icon small color="primary darken-2">mdi-information </v-icon>click the button to</small>
+    <v-btn
+    small
+     rounded
+      color="primary"
+      class="ma-1 white--text text-right"
+    >
+      View All
+        <v-icon
+          dark
+          right
+        >
+         mdi-hand-pointing-right
+        </v-icon>
+    </v-btn>
+    </div>
 </v-card>
 
 </v-card>

@@ -2,8 +2,11 @@
   <div>
     
     <HomeIntroOne />
-    <HomeSlideProduct />
-    <sales/>
+    <v-divider></v-divider>
+    <v-divider></v-divider>
+    <HomeSlideProduct class="mb-3"/>
+    <sales class="mb-3"/>
+    
     <HomeColumn />
     
   </div>
