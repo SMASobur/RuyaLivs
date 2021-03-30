@@ -74,14 +74,14 @@
       class="mb-3"
       fab
       @click.stop="say('Added to Cart')"
-      small
+      x-small
       absolute
       bottom
       right
       color="primary"
     >
       <v-icon>
-        mdi-plus
+        mdi-cart-plus
       </v-icon>
     </v-btn>
     </v-card>
