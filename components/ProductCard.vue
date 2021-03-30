@@ -4,11 +4,18 @@
       <v-img
         height="150"
         contain
-        class="green lighten-4"
+        class="green lighten-4 "
         :src="thumbnail[0]"
         :lazy-src="thumbnail[0]"
         
       >
+          <p
+            v-if="hasDiscount"
+            class="font-italic mr-2 error--text my-0 text-decoration-line-through bottom-right"
+          >
+            <b> SEK {{ originalPrice }}</b>
+          </p>
+          
         <v-expand-transition>
           <div
             v-if="hover"
@@ -19,7 +26,19 @@
           </div>
         </v-expand-transition>
 
-
+                  <v-btn
+                  class="mr-16 mt-5 rotate lighten-3 red--text"
+                  v-if="hasDiscount"
+                  color="orange"
+                  dark
+                  tile
+                  x-small
+                  absolute
+                  top
+                  right
+                >
+                 <strong>Rabatt: {{ (price-originalPrice).toFixed(2) }}</strong> 
+                </v-btn>
         </v-img>
 
       
@@ -35,12 +54,7 @@
 
       <v-card-text>
         <div class="d-flex">
-          <p
-            v-if="hasDiscount"
-            class="error--text my-0 text-decoration-line-through text-truncate"
-          >
-            SEK {{ originalPrice }}
-          </p>
+
 
           <p
             :class="{ 'mx-2': hasDiscount }"
@@ -52,7 +66,11 @@
 
         </div>
       </v-card-text>
-           <v-btn
+      
+ 
+
+
+      <v-btn
       class="mb-2"
       fab
       @click.stop="say('Added to Cart')"
@@ -155,5 +173,13 @@ export default {
   opacity: 0.8;
   position: absolute;
   width: 100%;
+} 
+.rotate{
+  transform: rotate(310deg);
+}
+.bottom-right {
+  position: absolute;
+  bottom: 1px;
+  right: 7px;
 }
 </style>
