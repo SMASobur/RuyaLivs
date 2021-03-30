@@ -10,17 +10,16 @@
             
             <v-img
               src="img/Logoround1.png"
-              class="white--text align-end"
+              class="white--text align-end fullimage"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="550px"
-              width="570px"
+              
               
             >
             <v-card-title  class="txtgb">Sales and Offers</v-card-title>
 
             </v-img>
             <v-card-actions>
-                     <h3 class="font-weight-light mx-1">we are here to serve you best with afortable price. we are here to serve you best with afortable price.</h3>
+                     <h3 class="font-weight-light mx-1">we are here to serve you best with afortable price. we are here to serve you best with afortable price. </h3>
             </v-card-actions>
           </v-card>
       </v-col>
@@ -32,17 +31,16 @@
             
             <v-img
               src="https://cdn.vuetifyjs.com/images/cards/plane.jpg"
-              class="white--text align-end"
+              class="white--text align-end fullimage"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="550px"
-              width="570px"
+             
               
             >
             <v-card-title  class="txtgb">Sales and Offers</v-card-title>
 
             </v-img>
             <v-card-actions>
-                     <h3 class="font-weight-light mx-1">we are here to serve you best with afortable price. we are here to serve you best with afortable price.</h3>
+                     <h3 class="font-weight-light mx-1">we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price.we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price.we are here to serve you best with afortable price.</h3>
             </v-card-actions>
           </v-card>
       </v-col>

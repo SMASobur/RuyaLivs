@@ -9,9 +9,8 @@
 
             <v-img
               :src="card.src"
-              class="white--text align-end"
+              class="white--text align-end fullimage"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="300px"
 
             >
             <v-card-title  class="txtgb" v-text="card.title"></v-card-title>
@@ -20,12 +19,12 @@
 
             </v-img>
             <v-card-actions>
-                     <h3 class="font-weight-light mx-1">{{card.subtitle}}</h3>
-
-        <v-btn
+                     <h3 class="font-weight-light mx-1">{{card.subtitle}}
+     <div class="text-right">
+      <v-btn
       rounded
       v-if="card.link"
-        class="ma-2"
+        class="ma-2 "
         color="primary "
         dark
         :to=card.link
@@ -38,6 +37,10 @@
          mdi-hand-pointing-right 
         </v-icon>
       </v-btn>
+      </div>
+                     </h3>
+
+
             </v-card-actions>
           </v-card>
         </v-col>
@@ -70,7 +73,10 @@ export default {
   margin-top: auto;
   padding-top: 20px;
 }
-
+.fullimage{
+  max-width: 100%;
+  height: auto;
+}
 @media screen and (min-width: 601px) {
   slider-background {
     font-size: 65px;

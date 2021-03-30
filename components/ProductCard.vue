@@ -7,6 +7,7 @@
         class="green lighten-4"
         :src="thumbnail[0]"
         :lazy-src="thumbnail[0]"
+        
       >
         <v-expand-transition>
           <div
@@ -17,8 +18,17 @@
             <v-btn small rounded outlined dark> View Details </v-btn>
           </div>
         </v-expand-transition>
-      </v-img>
+
+
+        </v-img>
+
+      
+
+ 
       <p class="text-truncate mx-4 mt-2 mb-0 font-weight-bold">{{ title }}</p>
+    
+
+
       <v-card-subtitle class=" mt-0 pt-0">
         {{ description }}</v-card-subtitle
       >
@@ -31,16 +41,34 @@
           >
             SEK {{ originalPrice }}
           </p>
+
           <p
             :class="{ 'mx-2': hasDiscount }"
             class="success--text my-0 font-weight-bold text-truncate"
           >
             SEK {{ price }}
+
           </p>
+
         </div>
       </v-card-text>
+           <v-btn
+      class="mb-2"
+      fab
+      small
+      absolute
+      bottom
+      right
+      color="primary"
+    >
+      <v-icon>
+        mdi-plus
+      </v-icon>
+    </v-btn>
     </v-card>
+    
   </v-hover>
+
 </template>
 
 <script>
