@@ -1,9 +1,9 @@
 <template>
-<v-card>
+<v-card shaped>
   <v-row no-gutters>
       <v-col
       >
-     <h3 class="mt-5 ml-5">Our Best Sales</h3>
+     <h3 class="mt-5 ml-5">Our New Products</h3>
       </v-col>
 
       <v-col
@@ -31,11 +31,11 @@
 
 <v-card   elevation="5" rounded >
     <v-sheet
-    class="mx-auto ma-1 "
+    class="mx-auto ma-1"
   >
     <v-slide-group
       v-model="model"
-      class="pa-1"
+      class="pa-1 pb-3"
 
     >
       <v-slide-item
@@ -43,42 +43,95 @@
         :key="n"
       >
 
-  <v-card
-    hover
-    class="ma-2 vertical"
-    max-width="150"
-    max-hight="100"
-  >
-    <v-img
-    contain
+   <v-hover v-slot="{ hover }">
+    <v-card @click="onDetailsClicked" hover height="100%" tile  max-width="170"
+     max-hight="150" class="ma-1 mb-2 vertical">
+      <v-img
+        height="150"
+        contain
+        class="green lighten-4 "
+        src="img/olivesalad.png"
+        
+        
+      >
+          <p
+            v-if="false"
+            class="font-italic mr-2 error--text my-0 text-decoration-line-through bottom-right"
+          >
+            <b>SEK 320</b>
+          </p>
+          
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out primary darken-4 v-card--reveal"
+            style="height: 100%"
+          >
+            <v-btn small rounded outlined dark> View Details </v-btn>
+          </div>
+        </v-expand-transition>
 
-      src="img/olivesalad.png"
-      height="100"
-    >
-             <v-btn
-                  small
-                  color="deep-orange"
-                  outlined
+                  <v-btn
+                  class="mr-16 mt-5 rotate lighten-3 red--text"
+                  v-if="false"
+                  color="orange"
                   dark
-                  class="mt-2 mr-2 bgcolor"
+                  tile
+                  x-small
+                  absolute
+                  top
+                  right
                 >
-
-                <div> <h2>66:-</h2></div>
+                 <strong>Rabatt: 12.01</strong> 
                 </v-btn>
+        </v-img>
 
-    </v-img>
+      
+
+ 
+      <p class="text-truncate mx-4 mt-2 mb-0 font-weight-bold">A super product title</p>
+    
 
 
-    <v-card-title>
-      Top western road trips
-    </v-card-title>
-    <v-card-subtitle>
-      1,000 miles of wonder
-    </v-card-subtitle>
+      <v-card-subtitle class=" mt-0 pt-0">
+        12*12 description</v-card-subtitle
+      >
 
-    <v-card-actions>
-    </v-card-actions>
-  </v-card>
+      <v-card-text>
+        <div class="d-flex">
+
+
+          <p
+            :class="{ 'mx-2': true }"
+            class="success--text my-0 font-weight-bold text-truncate"
+          >
+            SEK 500
+
+          </p>
+
+        </div>
+      </v-card-text>
+      
+ 
+
+
+      <v-btn
+      class="mb-7"
+      fab
+      @click.stop="say('Added to Cart')"
+      small
+      absolute
+      bottom
+      right
+      color="primary"
+    >
+      <v-icon>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+    </v-card>
+    
+  </v-hover>
 
       </v-slide-item>
     </v-slide-group>
@@ -89,21 +142,40 @@
 
 </template>
 
+
 <script>
-  export default {
-    data: () => ({
+export default {
+     data: () => ({
       model: null,
     }),
-  }
+  methods: {
+         say(message) {
+      alert(message)
+    },
+}
+};
 </script>
 
 <style>
-.bgcolor{
-  background-color: white;
-  
+
+.rotate{
+  transform: rotate(310deg);
 }
+.bottom-right {
+  position: absolute;
+  bottom: 1px;
+  right: 7px;
+}
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.8;
+  position: absolute;
+  width: 100%;
+} 
 .vertical {
- overflow-y: auto;;
-  
+ overflow-y: auto;
 }
+  
 </style>
