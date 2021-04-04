@@ -71,7 +71,7 @@
 
 
       <v-btn
-      class="mb-6"
+      class="mb-7"
       fab
       @click.stop="say('Added to Cart')"
       x-small

@@ -24,7 +24,7 @@
       >
 
    <v-hover v-slot="{ hover }">
-    <v-card @click="onDetailsClicked" hover height="100%" tile  max-width="170"
+    <v-card hover height="100%" tile  max-width="170"
      max-hight="150" class="ma-1 mb-2 vertical">
       <v-img
         height="150"
