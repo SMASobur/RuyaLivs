@@ -106,6 +106,8 @@
       <div class="d-none d-md-block">
         <v-btn text to="/">Home</v-btn>
         <v-btn text to="/shop">Shop</v-btn>
+        <v-btn text to="/contact">Contact </v-btn>
+
         <v-btn
           text
           to="/order"
