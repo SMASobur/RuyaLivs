@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12" md="6" sm="12" class="py-0">
       <v-text-field
-        placeholder="e.g. Burger, Indian Parata..."
+        placeholder="e.g. Ris, Olja, Tvål"
         dense
         rounded
         outlined
