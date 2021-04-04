@@ -17,7 +17,7 @@
       sm="12"
       :class="{ 'my-0 pt-0': !$vuetify.breakpoint.xs }"
     >
-      <!-- <v-autocomplete
+      <v-autocomplete
         v-model="values"
         :items="categoryNames"
         outlined
@@ -28,10 +28,15 @@
         multiple
         rounded
         @change="onMenuFilterChange"
-      ></v-autocomplete> -->
+      ></v-autocomplete> 
+
+    </v-col>
+
       <v-chip-group
+      class="mtop mb-2"
         v-model="values"
         active-class="accent"
+       
         @change="onMenuFilterChange"
       >
         <v-chip
@@ -42,7 +47,6 @@
           {{ category }}
         </v-chip>
       </v-chip-group>
-    </v-col>
   </v-row>
 </template>
 
@@ -96,4 +100,9 @@ export default {
 </script>
 
 <style>
+.mtop{
+  margin-top: -35px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 </style>
