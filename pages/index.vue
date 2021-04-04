@@ -17,9 +17,8 @@ import HomeIntroOne from "@/components/home/HomeIntroOne.vue";
 import HomeColumn from "@/components/home/HomeColumn.vue";
 import HomeSlideProduct from "@/components/home/HomeSlideProduct.vue";
 import Sales from '~/components/home/sales.vue';
-import Map from "@/components/home/Map.vue";
 export default {
-  components: { HomeIntro, HomeIntroOne, HomeColumn, HomeSlideProduct, Sales, Map},
+  components: { HomeIntro, HomeIntroOne, HomeColumn, HomeSlideProduct, Sales,},
   data() {
     return {};
   },
