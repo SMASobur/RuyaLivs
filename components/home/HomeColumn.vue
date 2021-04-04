@@ -32,7 +32,12 @@
             target="_blank"
             color="primary"
           >
-            Visa alla produkter
+            <v-icon
+      large
+      color=" white"
+    >
+      mdi-download
+    </v-icon> Visa alla produkter
           </v-btn>
           
           </v-card>
