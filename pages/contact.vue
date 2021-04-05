@@ -1,3 +1,6 @@
 <template>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod aliquam minus dicta corrupti tempore similique ipsam dolores veritatis iusto nam.</p>
+<div class="ml-5"><h1>Contact Us</h1> <br> <p>Vi importerar livsmedelsprodukter från alla världsdelar bland annat
+Turkiet, Kina, Mexiko, Indien, Pakistan, Portugal, Argentina, Egypt, Kanada..</p></div>
+
+
 </template>
