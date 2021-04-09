@@ -55,6 +55,7 @@
           :isAddedToCart="item.isAddedToCart"
           :sizeAndPrice="item.sizeAndPrice"
           @onDetailsClicked="onMenuItemClick(item)"
+          @onClickMenuAddToCart="onClickMenuAddToCart(item)"
         />
       </v-col>
     </v-row>
@@ -102,7 +103,13 @@ export default {
 
   methods: {
     ...mapActions("reservation", ["deActivateReservationWithPreOrder"]),
-    ...mapActions("menu", ["fetchMenus", "setPageNo", "resetFilter"]),
+    ...mapActions("menu", [
+      "addItemToCart",
+      "toggleItemAddedToCart",
+      "fetchMenus",
+      "setPageNo",
+      "resetFilter",
+    ]),
     onPreOrderChange(val) {
       if (!val) {
         this.deActivateReservationWithPreOrder();
@@ -117,6 +124,21 @@ export default {
     onMenuItemClick(item) {
       this.selectedItem = item;
       this.isMenuItemClicked = true;
+    },
+    onClickMenuAddToCart(item) {
+      // console.log('has multiple size',item);
+      // return
+
+      if (item.hasMultipleSize) {
+        this.onMenuItemClick(item);
+      } else {
+        const payload = {
+          productId: item.id,
+          size: "default",
+        };
+        this.addItemToCart(payload);
+        this.toggleItemAddedToCart(payload);
+      }
     },
   },
   mounted() {

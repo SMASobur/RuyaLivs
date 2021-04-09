@@ -483,8 +483,8 @@ export default {
         totalCost: this.cartTotalPrice,
         // paymentToken: this.token.id,
       };
-
       // console.log("add order", order);
+      // return;
       try {
         const response = await this.$apollo.mutate({
           mutation: addOrderGql,

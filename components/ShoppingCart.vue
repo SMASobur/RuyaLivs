@@ -5,7 +5,10 @@
         <v-divider inset :key="index + '-first'"></v-divider>
         <v-list-item :key="index">
           <v-list-item-avatar class="d-none d-sm-block">
-            <v-img :src="item.thumbnail[0]" :lazy-src="item.thumbnail[0]"></v-img>
+            <v-img
+              :src="item.thumbnail[0]"
+              :lazy-src="item.thumbnail[0]"
+            ></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title
@@ -15,36 +18,56 @@
               ></v-list-item-title
             >
             <v-list-item-subtitle v-if="!disableIncDec">
-              <v-btn-toggle dense color="accent" class="mt-1">
-                <v-btn
-                  tile
-                  outlined
-                  x-small
-                  @click="onClickDecrementQuantity(item)"
-                >
-                  <v-icon color="accent">mdi-minus</v-icon>
-                </v-btn>
-                <v-btn tile outlined x-small class="body-2">{{
-                  item.quantity
-                }}</v-btn>
-                <v-btn
-                  tile
-                  outlined
-                  x-small
-                  @click="onClickIncrementQuantity(item)"
-                >
-                  <v-icon color="accent">mdi-plus</v-icon>
-                </v-btn>
-              </v-btn-toggle>
+              <div class="d-flex align-center mb-3">
+                <v-btn-toggle dense color="accent">
+                  <v-btn
+                    tile
+                    outlined
+                    x-small
+                    @click="onClickDecrementQuantity(item)"
+                  >
+                    <v-icon color="accent">mdi-minus</v-icon>
+                  </v-btn>
+                  <v-btn tile outlined x-small class="body-2">{{
+                    item.quantity
+                  }}</v-btn>
+                  <v-btn
+                    tile
+                    outlined
+                    x-small
+                    @click="onClickIncrementQuantity(item)"
+                  >
+                    <v-icon color="accent">mdi-plus</v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+                <!-- <span class="subtitle-2 mt-2 ml-2">
+                  * {{ item.qtyPerBox }}</span
+                > -->
+                <v-chip v-if="item.qtyPerBox === 1" color="accent" class="ma-2" small>
+                  {{ item.qtyPerBox }} item in box
+                </v-chip>
+                <v-chip v-if="item.qtyPerBox > 1"  color="accent" class="ma-2" small>
+                  {{ item.qtyPerBox }} items in box
+                </v-chip>
+              </div>
             </v-list-item-subtitle>
+
+            <!-- <v-list-item-subtitle>
+              <span class="subtitle-2"> * {{ item.qtyPerBox }}</span>
+            </v-list-item-subtitle> -->
+
             <v-list-item-subtitle v-if="showQuantity">
-              Quantity: <strong>{{ item.quantity }}</strong>
+              Quantity:
+              <strong
+                >{{ item.quantity }} * {{ item.qtyPerBox }} items per
+                box</strong
+              >
             </v-list-item-subtitle>
           </v-list-item-content>
 
           <v-list-item-action>
             <v-list-item-title>{{
-              item.price * item.quantity
+              item.price * item.quantity * item.qtyPerBox
             }}</v-list-item-title>
           </v-list-item-action>
           <v-list-item-action v-if="!disableDelete">

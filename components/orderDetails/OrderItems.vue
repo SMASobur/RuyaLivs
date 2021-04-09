@@ -2,7 +2,7 @@
   <div>
     <v-card tile outlined>
       <div class="d-flex justify-space-between">
-        <v-card-title>Or der Items</v-card-title>
+        <v-card-title>Order Items</v-card-title>
       </div>
 
       <v-data-table
@@ -12,15 +12,14 @@
         disable-sort
       >
         <template v-slot:item.totalPrice="{ item }">
-          {{ item.pricePerUnit * item.productQuantity }}
+          {{ item.pricePerUnit * item.productQuantity * item.qtyPerBox}}
         </template>
         <template v-slot:body.append>
           <tr>
             <td><div class="headning">Total cost:</div></td>
             <td></td>
-            <td>
-
-            </td>
+            <td></td>
+            <td></td>
             <td>
               {{ items.totalCost }}
             </td>
@@ -49,6 +48,7 @@ export default {
       headers: [
         { text: "Name", value: "productName" },
         { text: "Quantity", value: "productQuantity" },
+        { text: "Quantity Per Box", value: "qtyPerBox" },
         { text: "Price/Unit", value: "pricePerUnit" },
         { text: "Total Price", value: "totalPrice", srotable: true },
       ],

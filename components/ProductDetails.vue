@@ -170,6 +170,14 @@
                 </v-list-item>
                 <v-list-item two-line>
                   <v-list-item-content>
+                    <v-list-item-subtitle>Quantity Per Box</v-list-item-subtitle>
+                    <v-list-item-title>{{
+                      item.qtyPerBox
+                    }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item two-line>
+                  <v-list-item-content>
                     <v-list-item-subtitle>Description</v-list-item-subtitle>
                     <v-list-item-title>{{
                       item.description

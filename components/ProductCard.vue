@@ -4,18 +4,17 @@
       <v-img
         height="150"
         contain
-        class="green lighten-4 "
+        class="green lighten-4"
         :src="thumbnail[0]"
         :lazy-src="thumbnail[0]"
-        
       >
-          <p
-            v-if="hasDiscount"
-            class="font-italic mr-2 error--text my-0 text-decoration-line-through bottom-right"
-          >
-            <b> SEK {{ originalPrice }}</b>
-          </p>
-          
+        <p
+          v-if="hasDiscount"
+          class="font-italic mr-2 error--text my-0 text-decoration-line-through bottom-right"
+        >
+          <b> SEK {{ originalPrice }}</b>
+        </p>
+
         <v-expand-transition>
           <div
             v-if="hover"
@@ -26,68 +25,50 @@
           </div>
         </v-expand-transition>
 
-                  <v-btn
-                  class="mr-16 mt-5 rotate lighten-3 red--text"
-                  v-if="hasDiscount"
-                  color="orange"
-                  dark
-                  tile
-                  x-small
-                  absolute
-                  top
-                  right
-                >
-                 <strong>Rabatt: {{ (price-originalPrice).toFixed(2) }}</strong> 
-                </v-btn>
-        </v-img>
+        <v-btn
+          class="mr-16 mt-5 rotate lighten-3 red--text"
+          v-if="hasDiscount"
+          color="orange"
+          dark
+          tile
+          x-small
+          absolute
+          top
+          right
+        >
+          <strong>Rabatt: {{ (price - originalPrice).toFixed(2) }}</strong>
+        </v-btn>
+      </v-img>
 
-      
-
- 
       <p class="text-truncate mx-4 mt-2 mb-0 font-weight-bold">{{ title }}</p>
-    
 
-
-      <v-card-subtitle class=" mt-0 pt-0">
-        {{ description }}</v-card-subtitle
-      >
+      <v-card-subtitle class="mt-0 pt-0"> {{ description }}</v-card-subtitle>
 
       <v-card-text>
         <div class="d-flex">
-
-
           <p
             :class="{ 'mx-2': hasDiscount }"
             class="success--text my-0 font-weight-bold text-truncate"
           >
             SEK {{ price }}
-
           </p>
-
         </div>
       </v-card-text>
-      
- 
-
 
       <v-btn
-      class="mb-7"
-      fab
-      @click.stop="say('Added to Cart')"
-      x-small
-      absolute
-      bottom
-      right
-      color="primary"
-    >
-      <v-icon>
-        mdi-cart-plus
-      </v-icon>
-    </v-btn>
+        class="mb-7"
+        fab
+        @click.stop="onClickMenuAddToCart"
+        x-small
+        absolute
+        bottom
+        right
+        color="primary"
+      >
+        <v-icon> mdi-cart-plus </v-icon>
+      </v-btn>
     </v-card>
-    
   </v-hover>
-
 </template>
 
 <script>
@@ -134,8 +115,8 @@ export default {
     console.log("title", this.title);
   },
   methods: {
-         say(message) {
-      alert(message)
+    say(message) {
+      alert(message);
     },
     addItemToCart(productId) {
       this.addItemToCart(productId);
@@ -155,7 +136,10 @@ export default {
       "toggleItemAddedToCart",
       "removeItemFromCart",
     ]),
- 
+    onClickMenuAddToCart(){
+      this.$emit('onClickMenuAddToCart');
+
+    }
   },
   computed: {
     hasDiscount() {
@@ -173,8 +157,8 @@ export default {
   opacity: 0.8;
   position: absolute;
   width: 100%;
-} 
-.rotate{
+}
+.rotate {
   transform: rotate(310deg);
 }
 .bottom-right {

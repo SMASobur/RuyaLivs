@@ -10,7 +10,7 @@
               <v-col>
                 <v-text-field
                   v-model="product.productName"
-                  label="Menu title *"
+                  label="Product title *"
                   :rules="[(v) => !!v || 'This field is required']"
                   required
                 ></v-text-field>
@@ -21,10 +21,29 @@
                   :items="remoteCategories"
                   item-text="name"
                   item-value="id"
-                  label="Menu Categories *"
+                  label="Product Categories *"
                   return-object
                   :rules="[(v) => !!v || 'This field is required']"
                 ></v-select>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="product.articleNumber"
+                  label="Product article number*"
+                  :rules="[(v) => !!v || 'This field is required']"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="product.qtyPerBox"
+                  label="Quantity per box*"
+                  :rules="requiredNumberRules"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
 
@@ -82,7 +101,7 @@
                   <v-text-field
                     v-model="product.price"
                     label="Price *"
-                    :rules="priceRules"
+                    :rules="requiredNumberRules"
                     required
                   ></v-text-field>
                 </v-col>
@@ -177,7 +196,7 @@ export default {
       fieldMandatoryRules: [(v) => !!v || "Name is required"],
       isProductFormValid: false,
       hasMultipleSize: false,
-      priceRules: authRules.requiredNumberRules,
+      requiredNumberRules: authRules.requiredNumberRules,
       offerRules: authRules.notRequiredNumberRules,
     };
   },
@@ -228,6 +247,7 @@ export default {
           });
         } else {
           this.product.price = parseFloat(this.product.price);
+          this.product.qtyPerBox = parseInt(this.product.qtyPerBox);
           this.product.offer = parseFloat(this.product.offer)
             ? parseFloat(this.product.offer)
             : 0;
@@ -275,6 +295,8 @@ export default {
       try {
         const updatedProduct = {
           productName: this.product.productName,
+          articleNumber: this.product.articleNumber,
+          qtyPerBox: parseInt(this.product.qtyPerBox),
           price: parseFloat(this.product.price),
           offer: parseFloat(this.product.offer),
           thumbnail: this.product.thumbnail,
@@ -284,7 +306,7 @@ export default {
             ? this.product.category.id
             : this.product.category,
         };
-        console.log("updated productttt", updatedProduct);
+        console.log("updated product", updatedProduct);
 
         this.addingProduct = true;
 

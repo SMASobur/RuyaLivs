@@ -179,8 +179,8 @@
                         ></v-list-item-title
                       >
                       <v-list-item-subtitle
-                        >Quantity
-                        {{ item.productQuantity }}</v-list-item-subtitle
+                        >Quantity:
+                        {{ item.productQuantity }} * {{item.qtyPerBox}} items per box</v-list-item-subtitle
                       >
                       <v-list-item-subtitle
                         >Price

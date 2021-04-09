@@ -7,10 +7,12 @@ query getProducts($productsInput:GetProductsInput){
     products{
       id
       productName
+      articleNumber
       thumbnail
       description
       price
       offer
+      qtyPerBox
       netPrice
       hasMultipleSize
       sizeAndPrice{

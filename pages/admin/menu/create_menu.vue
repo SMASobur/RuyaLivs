@@ -18,6 +18,8 @@ export default {
     return {
       product: {
         category: "",
+        articleNumber: "",
+        qtyPerBox: 0,
         productName: "",
         thumbnail: [],
         description: "",

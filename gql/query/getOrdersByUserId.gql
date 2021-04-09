@@ -26,6 +26,7 @@ query getOrderByUserId($orderInput: GetOrderByUserIdInput!) {
           pricePerUnit
           productQuantity
           productSize
+          qtyPerBox
 
         }
         totalCost

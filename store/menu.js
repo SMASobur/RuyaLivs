@@ -167,6 +167,7 @@ export const actions = {
                     thumbnail: product.thumbnail,
                     price: selectedSize.netPrice,
                     size: size,
+                    qtyPerBox: product.qtyPerBox,
                     quantity: 1
                 }
             } else {
@@ -176,6 +177,7 @@ export const actions = {
                     thumbnail: product.thumbnail,
                     price: product.netPrice,
                     size: size,
+                    qtyPerBox: product.qtyPerBox,
                     quantity: 1
                 }
             }
@@ -235,7 +237,7 @@ export const getters = {
         return state.cart.find(x => x.id === productId && size === size);
     },
     cartTotalPrice(state) {
-        return state.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        return state.cart.reduce((total, item) => total + item.price * item.quantity * item.qtyPerBox, 0);
     },
     orderItems(state) {
         return state.cart.map(item => {
@@ -244,6 +246,7 @@ export const getters = {
                 productName: item.title,
                 pricePerUnit: item.price,
                 productSize: item.size,
+                qtyPerBox: item.qtyPerBox,
                 productQuantity: item.quantity
             }
         })
