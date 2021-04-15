@@ -50,7 +50,7 @@
             :class="{ 'mx-2': hasDiscount }"
             class="success--text my-0 font-weight-bold text-truncate"
           >
-            SEK {{ price }}
+            SEK {{ (price/qnt).toFixed(2)}}
           </p>
         </div>
       </v-card-text>
@@ -92,7 +92,11 @@ export default {
       default: "Food",
     },
     price: {
-      type: String,
+      type: String | Number,
+      required: true,
+    },
+      qnt: {
+      type: String | Number,
       required: true,
     },
     originalPrice: {
