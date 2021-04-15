@@ -50,7 +50,7 @@
             :class="{ 'mx-2': hasDiscount }"
             class="success--text my-0 font-weight-bold text-truncate"
           >
-            SEK {{ (price/qnt).toFixed(2)}}
+            SEK {{ price }}
           </p>
         </div>
       </v-card-text>
