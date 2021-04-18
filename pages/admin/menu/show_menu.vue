@@ -19,14 +19,20 @@
             </v-toolbar>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+            <v-icon small class="mr-2" @click="editItem(item)"
+              >mdi-pencil</v-icon
+            >
             <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
           </template>
         </v-data-table>
       </client-only>
     </v-col>
     <v-dialog v-model="editDialog" max-width="700px">
-      <MenuForm :isEditForm="true" :product="product" @onSaveEditedItem="onSaveEditedItem" />
+      <MenuForm
+        :isEditForm="true"
+        :product="product"
+        @onSaveEditedItem="onSaveEditedItem"
+      />
     </v-dialog>
   </v-row>
 </template>
@@ -41,7 +47,7 @@ export default {
     this.fetchMenu();
   },
   components: {
-    MenuForm
+    MenuForm,
   },
 
   data() {
@@ -50,15 +56,15 @@ export default {
         pageNo: 1,
         limit: 12,
         categories: [],
-        searchText: ""
+        searchText: "",
       },
       headers: [
-        { text: "Menu Title", value: "productName"},
+        { text: "Menu Title", value: "productName" },
         { text: "Price", value: "price" },
         { text: "Offer (%)", value: "offer" },
         { text: "Net Price", value: "netPrice" },
         { text: "Category", value: "category.name" },
-        { text: "Actions", value: "actions", sortable: false }
+        { text: "Actions", value: "actions", sortable: false },
       ],
       menus: [],
       totalProductCount: 0,
@@ -66,18 +72,17 @@ export default {
       product: null,
       editedIndex: -1,
       deleteIndex: -1,
-      loadigMenu:false,
+      loadigMenu: false,
     };
   },
   methods: {
     async fetchMenu() {
       try {
-
         this.loadigMenu = true;
         const response = await this.$apollo.query({
           query: fetchMenuQuery,
           variables: { productsInput: this.menuPayload },
-          fetchPolicy:'network-only'
+          fetchPolicy: "network-only",
         });
         const products = response.data.getProducts.products;
         const totalProductCount = response.data.getProducts.count;
@@ -90,7 +95,7 @@ export default {
         this.loadigMenu = false;
         this.$notifier.showMessage({
           content: error.message,
-          color: "error"
+          color: "error",
         });
       }
     },
@@ -113,28 +118,29 @@ export default {
     async deleteProductAPICall(id) {
       const response = await this.$apollo.mutate({
         mutation: deleteProductMutation,
-        variables: { id: id }
+        variables: { id: id },
       });
       const data = response.data.deleteProduct;
       if (data.success) {
         this.$notifier.showMessage({
           content: data.message,
-          color: "success"
+          color: "success",
         });
         this.menus.splice(this.deleteIndex, 1);
       } else {
         this.$notifier.showMessage({
           content: data.message,
-          color: "error"
+          color: "error",
         });
       }
     },
-    onSaveEditedItem(item) {
-      console.log("product edite", this.product);
+    onSaveEditedItem(netPrice) {
+      this.product.netPrice = netPrice;
+      console.log("product edited", this.product);
       Object.assign(this.menus[this.editedIndex], this.product);
       this.editDialog = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

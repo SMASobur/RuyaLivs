@@ -298,7 +298,9 @@ export default {
           articleNumber: this.product.articleNumber,
           qtyPerBox: parseInt(this.product.qtyPerBox),
           price: parseFloat(this.product.price),
-          offer: parseFloat(this.product.offer),
+          offer: isNaN(parseFloat(this.product.offer))
+            ? 0
+            : parseFloat(this.product.offer),
           thumbnail: this.product.thumbnail,
           description: this.product.description,
           isAvailable: this.product.isAvailable,
@@ -306,6 +308,7 @@ export default {
             ? this.product.category.id
             : this.product.category,
         };
+        console.log("uuu", isNaN(parseFloat(this.product.offer)));
         console.log("updated product", updatedProduct);
 
         this.addingProduct = true;
@@ -324,7 +327,7 @@ export default {
             color: "success",
           });
 
-          this.onSaveEditedItem(this.product);
+          this.onSaveEditedItem(this.netPrice);
         } else {
           this.$notifier.showMessage({
             content: data.message,
@@ -353,15 +356,6 @@ export default {
     },
     onSaveEditedItem(item) {
       this.$emit("onSaveEditedItem", item);
-    },
-    calculateNetPrice(price = 0, offer = 0) {
-      if (price && offer) {
-        return price - (price * offer) / 100;
-      } else if (price && !offer) {
-        return price;
-      } else {
-        return 0;
-      }
     },
   },
   computed: {
