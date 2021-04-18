@@ -54,6 +54,7 @@
           :description="item.description"
           :isAddedToCart="item.isAddedToCart"
           :sizeAndPrice="item.sizeAndPrice"
+          :qnt="item.qtyPerBox"
           @onDetailsClicked="onMenuItemClick(item)"
           @onClickMenuAddToCart="onClickMenuAddToCart(item)"
         />

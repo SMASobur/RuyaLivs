@@ -92,7 +92,11 @@ export default {
       default: "Food",
     },
     price: {
-      type: String,
+      type: String | Number,
+      required: true,
+    },
+      qnt: {
+      type: String | Number,
       required: true,
     },
     originalPrice: {
