@@ -3,7 +3,7 @@ import time
 import json
 from pymongo import MongoClient
 import datetime
-cluster= MongoClient("mongodb+srv://tanim:abbatanim@clouddb.kzvmd.mongodb.net/abbatanim?retryWrites=true&w=majority")
+cluster= MongoClient("mongodb+srv://tanim:abbatanim1@clouddb.kzvmd.mongodb.net/abbatanim?retryWrites=true&w=majority")
 db= cluster["abbatanim"]
 collections=db["testdata"]
 
