@@ -34,6 +34,7 @@ y = json.loads(encodeddata)
 #writing on DB
 try:
     for i in y["Articles"]:
+        filter = { "Article:": i['ArticleNumber'] }
         print("Article:", i['ArticleNumber'])
         print('Description: ',i['Description'])
         print("Being inserted to DB...")
@@ -49,9 +50,11 @@ try:
             "qtyPerBox":10,
             "thumbnail":["https://firebasestorage.googleapis.com/v0/b/image-server-65bbd.appspot.com/o/restaurant%2Fimage_1611186419211.png?alt=media&token=c387814f-f9b2-4e2b-8afc-875164b43eb0"],
             "createdAt":datetime.datetime.utcnow()}
-        collections.insert_one(document)
+        values = { "$set": document }
+        #collections.insert_one(document)
+        collections.update_one(filter, values, True) 
         print("done.............")
-        time.sleep( 1 )
+        time.sleep(1)
         break
    
 except:
