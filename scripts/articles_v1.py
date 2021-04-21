@@ -79,7 +79,7 @@ try:
         print(".................")
         time.sleep(2)
 except:
-    print("Something went wrong during writing in database")
+    print("Something went wrong during writing on database")
 
 finally:
     print("Data has been successfully written on remote DB")
