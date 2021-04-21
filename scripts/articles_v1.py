@@ -47,13 +47,11 @@ def one_request(num):
 #formating and unicode corrections
 json_data=send_request() 
 json_object = json.loads(json_data)
-json_formatted_str = json.dumps(json_object, indent=2)
-encodeddata=json_formatted_str.replace(r"\u00e4", "ä").replace(r"\u00f6", "ö").replace(r"\u00e5", "å")
-y = json.loads(encodeddata)
+
 #writing on DB
 
 try:
-    for i in y["Articles"]:
+    for i in json_object["Articles"]:
         single_data=one_request(i['ArticleNumber'])
         single_data = json.loads(single_data)
         single_data= json.dumps(single_data, indent=2)
@@ -63,7 +61,7 @@ try:
         print("description:",x["Article"]["Description"])
         print("is being written on DB...")
         document={
-            "Article":x["Article"]["ArticleNumber"],
+            "articleNumber":x["Article"]["ArticleNumber"],
             "productName":x["Article"]["Description"],
             "description":i['Description'],
             "netPrice":float(x["Article"]["SalesPrice"]),
