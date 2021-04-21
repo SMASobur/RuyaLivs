@@ -4,11 +4,13 @@ import datetime
 import json
 from pymongo import MongoClient
 import datetime
+<<<<<<< HEAD
 #database connections
 cluster= MongoClient("mongodb+srv://tanim:abbatanim1@clouddb.kzvmd.mongodb.net/abbatanim?retryWrites=true&w=majority",ssl=True, ssl_cert_reqs='CERT_NONE')
 db= cluster["abbatanim"]
 collections=db["testdata"]
 #function to call fortnox REST end point for Products
+
 def send_request():
 
     try:
