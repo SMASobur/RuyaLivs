@@ -28,6 +28,10 @@ export default {
         v => !!v || "This field is required",
         v => /^\d+(,\d{1,2})?$/.test(v) || "Must be an integer number"
     ],
+    requiredNumberRulesSupportFloat: [
+        v => !!v || "This field is required",
+        v => /^[+-]?\d+(\.\d+)?$/.test(v) || "Must be a number"
+    ],
     notRequiredNumberRules: (v) => {
         if (!v) return true
         if (v && v.length == 0) return true;

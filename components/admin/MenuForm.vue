@@ -101,7 +101,7 @@
                   <v-text-field
                     v-model="product.price"
                     label="Price *"
-                    :rules="requiredNumberRules"
+                    :rules="requiredNumberRulesSupportFloat"
                     required
                   ></v-text-field>
                 </v-col>
@@ -197,6 +197,7 @@ export default {
       isProductFormValid: false,
       hasMultipleSize: false,
       requiredNumberRules: authRules.requiredNumberRules,
+      requiredNumberRulesSupportFloat: authRules.requiredNumberRulesSupportFloat,
       offerRules: authRules.notRequiredNumberRules,
     };
   },
