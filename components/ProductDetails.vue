@@ -11,7 +11,10 @@
         <v-card-text>
           <v-sheet scrollable>
             <v-row>
-              <v-col style="width:200px" class="d-flex flex-column my-auto align-center">
+              <v-col
+                style="width: 200px"
+                class="d-flex flex-column my-auto align-center"
+              >
                 <!-- <v-img
                   :src="defaultThumbnail"
                   :lazy-src="defaultThumbnail"
@@ -170,10 +173,10 @@
                 </v-list-item>
                 <v-list-item two-line>
                   <v-list-item-content>
-                    <v-list-item-subtitle>Quantity Per Box</v-list-item-subtitle>
-                    <v-list-item-title>{{
-                      item.qtyPerBox
-                    }}</v-list-item-title>
+                    <v-list-item-subtitle
+                      >Quantity Per Box</v-list-item-subtitle
+                    >
+                    <v-list-item-title>{{ item.qtyPerBox }}</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item two-line>
@@ -204,9 +207,11 @@ export default {
     value: Boolean,
   },
   created() {
-    this.selectedSize = this.item.sizeAndPrice.find(
-      (it) => it.isDefault === true
-    );
+    if (this.item.sizeAndPrice) {
+      this.selectedSize = this.item.sizeAndPrice.find(
+        (it) => it.isDefault === true
+      );
+    }
     this.defaultThumbnail = this.item.thumbnail[0];
   },
   data() {
