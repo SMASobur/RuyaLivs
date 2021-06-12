@@ -175,12 +175,16 @@
         <span>My Order</span>
         <v-icon>mdi-shopping</v-icon>
       </v-btn>
+
       <!-- <v-btn to="reservation">
         <span>Reservation</span>
         <v-icon>mdi-seat-passenger</v-icon>
       </v-btn> -->
     </v-bottom-navigation>
   </v-app>
+
+
+
 </template>
 
 <script>
@@ -189,6 +193,7 @@ import UserLogin from "@/components/auth/UserLogin.vue";
 import UserRegistration from "@/components/auth/UserRegistration.vue";
 import SnackBar from "@/components/SnackBar.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+import HomeFooter from "@/components/home/HomeFooter.vue";
 export default {
   components: {
     ShoppingCart,

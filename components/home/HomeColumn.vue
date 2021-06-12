@@ -63,18 +63,6 @@
 
 
 <script>
-export default {
-
-    data: () => ({
-      cards: [
-        { title: 'Try Our Online Order System and you will never go back', subtitle: 'we are here to serve you best with afortable price. we are here to serve you best with afortable price.we are here to serve you best with afortable price',src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 12 , button_text:'go to shop',},
-        { title: 'Sales and Offers',  subtitle: 'we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price.', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 ,},
-        { title: 'Transport Partner',subtitle: 'we are here to serve you best with afortable price. we are here to serve you best with afortable price. we are here to serve you best with afortable price. ', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6,},
-    
-
-      ],
-    }),
-}
 </script>
 
 <style>

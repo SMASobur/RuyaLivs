@@ -6,19 +6,20 @@
     <v-divider></v-divider>
     <HomeSlideProduct class="mb-3"/>
     <sales class="mb-3"/>    
-    <HomeColumn />
+    <HomeColumn />  
+    <home-footer/>
     
   </div>
 </template>
 
 <script>
-import HomeIntro from "@/components/home/HomeIntro.vue";
+import HomeFooter from "@/components/home/HomeFooter.vue";
 import HomeIntroOne from "@/components/home/HomeIntroOne.vue";
 import HomeColumn from "@/components/home/HomeColumn.vue";
 import HomeSlideProduct from "@/components/home/HomeSlideProduct.vue";
 import Sales from '~/components/home/sales.vue';
 export default {
-  components: { HomeIntro, HomeIntroOne, HomeColumn, HomeSlideProduct, Sales,},
+  components: { HomeFooter, HomeIntroOne, HomeColumn, HomeSlideProduct, Sales,},
   data() {
     return {};
   },
